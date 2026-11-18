@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import Base from '~/layouts/Base.astro';
+import PageIntro from '~/components/PageIntro.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import { leatherColors } from '~/data/catalog';
+import { img } from '~/lib/img';
+---
+
+<Base title="Colores de cuero" description="Colores de cuero de origen nacional disponibles para sillas, sitiales, taburetes y butacones." image="taller/cuero">
+  <PageIntro title="Colores de cuero" eyebrow="Materiales" crumbs={[{ label: 'Productos', href: '/productos' }]}>
+    <p>Cuero de origen nacional para asientos y respaldos de sillas, sitiales, taburetes y butacones.</p>
+  </PageIntro>
+
+  <section class="container">
+    <ul class="swatches">
+      {
+        leatherColors.map((c) => (
+          <li class="reveal">
+            <Image src={img(c.image)} alt={`Cuero ${c.name.toLowerCase()}`} widths={[300, 500]} sizes="(max-width: 640px) 50vw, 30vw" />
+            <span>{c.name}</span>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="center muted note">*Consultar disponibilidad de colores.</p>
+  </section>
+
+  <CtaBand title="¿Qué color elegirías?" text="Pide muestras o consulta disponibilidad para tu pedido." message="Hola, quisiera consultar por colores de cuero." />
+</Base>
+
+<style>
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 36px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  .swatches li {
+    display: grid;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .swatches :global(img) {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .swatches span {
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .note {
+    margin-top: 40px;
+  }
+
+  @media (max-width: 640px) {
+    .swatches {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

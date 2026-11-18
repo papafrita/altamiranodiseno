@@ -1,0 +1,23 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageIntro from '~/components/PageIntro.astro';
+---
+
+<Base title="Página no encontrada">
+  <PageIntro title="Página no encontrada">
+    <p>La página que buscas no existe o cambió de lugar.</p>
+  </PageIntro>
+  <div class="center actions">
+    <a class="btn btn--solid" href="/productos">Ver productos</a>
+    <a class="btn" href="/">Ir al inicio</a>
+  </div>
+</Base>
+
+<style>
+  .actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+</style>

@@ -1,0 +1,91 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import Base from '~/layouts/Base.astro';
+import PageIntro from '~/components/PageIntro.astro';
+import CategoryNav from '~/components/CategoryNav.astro';
+import ProductGrid from '~/components/ProductGrid.astro';
+import Gallery from '~/components/Gallery.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import { categories, lines, productsIn, productsInLine, type Category } from '~/data/catalog';
+import { img } from '~/lib/img';
+
+export const getStaticPaths = (() => categories.map((c) => ({ params: { categoria: c.slug }, props: { category: c } }))) satisfies GetStaticPaths;
+
+const { category } = Astro.props as { category: Category };
+const categoryLines = lines.filter((l) => l.category === category.slug);
+const loose = productsIn(category.slug).filter((p) => !p.line);
+---
+
+<Base title={category.name} description={category.intro} image={category.cover}>
+  <PageIntro title={category.name} crumbs={[{ label: 'Productos', href: '/productos' }]}>
+    <p>{category.intro}</p>
+  </PageIntro>
+
+  <CategoryNav current={category.slug} />
+
+  <div class="banner container reveal">
+    <Image src={img(category.cover)} alt="" widths={[800, 1280, 1800]} sizes="100vw" loading="eager" />
+  </div>
+
+  {
+    categoryLines.map((line) => (
+      <section class="container line" id={line.slug} aria-labelledby={`t-${line.slug}`}>
+        <div class="line__head reveal">
+          <h2 id={`t-${line.slug}`} class="title-lg">
+            {line.name}
+          </h2>
+          <p class="lead measure">{line.intro}</p>
+        </div>
+        <ProductGrid products={productsInLine(line.slug)} />
+      </section>
+    ))
+  }
+
+  {
+    loose.length > 0 && (
+      <section class="container line" aria-label={category.name}>
+        <ProductGrid products={loose} />
+      </section>
+    )
+  }
+
+  {
+    category.gallery && (
+      <section class="container line" aria-labelledby="en-situ">
+        <div class="line__head reveal">
+          <h2 id="en-situ" class="title-lg">
+            {categoryLines.length || loose.length ? 'En situ' : 'Colección'}
+          </h2>
+        </div>
+        <Gallery images={category.gallery.map((image) => ({ image }))} />
+      </section>
+    )
+  }
+
+  <CtaBand message={`Hola, quisiera cotizar ${category.name.toLowerCase()}.`} />
+</Base>
+
+<style>
+  .banner :global(img) {
+    width: 100%;
+    height: clamp(260px, 42vw, 620px);
+    object-fit: cover;
+  }
+
+  .line {
+    margin-top: clamp(56px, 6vw, 96px);
+  }
+
+  .line__head {
+    display: grid;
+    justify-items: center;
+    gap: 16px;
+    margin-bottom: 36px;
+    text-align: center;
+  }
+
+  .line__head p {
+    margin: 0;
+  }
+</style>

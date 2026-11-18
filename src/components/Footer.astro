@@ -1,0 +1,148 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { footerLinks } from '~/data/nav';
+import { mailLink, site, whatsappLink } from '~/data/site';
+import { img } from '~/lib/img';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <nav aria-label="Pie de página">
+      <ul class="footer__links">
+        {
+          footerLinks.map((l) => (
+            <li>
+              <a class="link-underline" href={l.href}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="footer__col">
+      <h2 class="footer__title">Visítanos</h2>
+      <address>
+        <a class="link-underline" href={site.mapsUrl} target="_blank" rel="noopener">
+          {site.address.street}<br />
+          {site.address.city}, {site.address.country}
+        </a>
+      </address>
+      <p>
+        {
+          site.phones.map((p) => (
+            <>
+              <a class="link-underline" href={p.href}>
+                {p.label}
+              </a>
+              <br />
+            </>
+          ))
+        }
+        <a class="link-underline" href={`mailto:${site.email}`}>{site.email}</a>
+      </p>
+    </div>
+
+    <div class="footer__col">
+      <h2 class="footer__title">Suscríbete a nuestras novedades</h2>
+      <p>Lanzamientos, nuevas piezas y noticias del taller.</p>
+      <a class="btn btn--solid" href={mailLink('Quiero recibir novedades', 'Hola, me gustaría recibir las novedades de Altamirano Diseño.')}>
+        Suscribirme
+      </a>
+    </div>
+  </div>
+
+  <div class="container footer__social">
+    <a href={site.instagram.url} target="_blank" rel="noopener" aria-label="Instagram">
+      <Icon name="instagram" />
+    </a>
+    <a href={whatsappLink('Hola, quisiera más información.')} target="_blank" rel="noopener" aria-label="WhatsApp">
+      <Icon name="whatsapp" />
+    </a>
+    <a href={`mailto:${site.email}`} aria-label="Correo">
+      <Icon name="mail" />
+    </a>
+  </div>
+
+  <div class="container footer__bottom">
+    <a href="/" class="footer__logo" aria-label="Inicio">
+      <Image src={img('marca/logo')} alt="" width={240} />
+    </a>
+    <p>© {year} {site.name}. Muebles hechos a mano en {site.address.city}, {site.address.country}.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: var(--section);
+    border-top: 1px solid var(--line);
+    padding-top: clamp(48px, 6vw, 80px);
+    font-size: 1.0625rem;
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    gap: 40px;
+  }
+
+  .footer__links {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--sans);
+    font-size: 0.875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .footer__title {
+    margin-bottom: 16px;
+    font-family: var(--sans);
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+  }
+
+  address {
+    font-style: normal;
+    margin-bottom: 1em;
+  }
+
+  .footer__social {
+    display: flex;
+    justify-content: center;
+    gap: 26px;
+    padding-top: 56px;
+    padding-bottom: 28px;
+  }
+
+  .footer__bottom {
+    display: grid;
+    justify-items: center;
+    gap: 16px;
+    padding-top: 28px;
+    padding-bottom: 40px;
+    border-top: 1px solid var(--line);
+    font-size: 0.9375rem;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+
+  .footer__logo :global(img) {
+    width: 120px;
+  }
+
+  @media (max-width: 900px) {
+    .footer__grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+</style>

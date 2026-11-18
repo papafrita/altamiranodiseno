@@ -1,0 +1,94 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageIntro from '~/components/PageIntro.astro';
+import Gallery from '~/components/Gallery.astro';
+import CtaBand from '~/components/CtaBand.astro';
+
+const spaces = [
+  {
+    id: 'comedores',
+    title: 'Comedores',
+    text: 'Mesas de maderas nativas y acero acompañadas de sillas y sitiales de la línea Altamirano.',
+    images: [
+      { image: 'ambientes/sillas', caption: 'Silla Altamirano', href: '/productos/sillas#silla-altamirano' },
+      { image: 'ambientes/comedor', caption: 'Mesas', href: '/productos/mesas' },
+      { image: 'ambientes/mesas', caption: 'Acero y madera', href: '/productos/mesas' },
+      { image: 'ambientes/comedor-rojo', caption: 'Sillas', href: '/productos/sillas' },
+      { image: 'productos/m5-foto', caption: 'Mesa M5', href: '/producto/mesa-m5' },
+      { image: 'ambientes/mesa-vidrio-comedor', caption: 'Mesas', href: '/productos/mesas' },
+      { image: 'ambientes/mesa-cuadrada', caption: 'Mesas', href: '/productos/mesas' },
+    ],
+  },
+  {
+    id: 'livings',
+    title: 'Livings',
+    text: 'Sofás, mesas de centro, arrimos y textiles que conviven con la luz y la madera.',
+    images: [
+      { image: 'ambientes/living', caption: 'Living', href: '/productos/sofas' },
+      { image: 'ambientes/arrimo-espejo', caption: 'Arrimos', href: '/productos/arrimos' },
+      { image: 'textiles/sofa', caption: 'Textiles', href: '/productos/textiles' },
+      { image: 'ambientes/mesa-centro-alfombra', caption: 'Mesas de centro', href: '/productos/mesas-de-centro' },
+      { image: 'ambientes/silla-altamirano', caption: 'Silla Altamirano', href: '/productos/sillas#silla-altamirano' },
+      { image: 'textiles/mantas', caption: 'Textiles', href: '/productos/textiles' },
+      { image: 'ambientes/escalera', caption: 'Iluminación', href: '/productos/lamparas' },
+    ],
+  },
+  {
+    id: 'iluminacion',
+    title: 'Iluminación',
+    text: 'Cuerpos de luz que transforman un espacio: lunas, colgantes y columnas hechas a mano.',
+    images: [
+      { image: 'ambientes/lampara-luna-living', caption: 'Luna', href: '/productos/lamparas' },
+      { image: 'ambientes/lamparas-columnas', caption: 'Columnas de luz', href: '/productos/lamparas' },
+      { image: 'ambientes/lampara-techo', caption: 'Colgantes', href: '/productos/lamparas' },
+      { image: 'ambientes/galeria', caption: 'Proyectos', href: '/productos/lamparas' },
+      { image: 'ambientes/contacto', caption: 'Luna', href: '/productos/lamparas' },
+      { image: 'ambientes/lamparas', caption: 'Cuerpos de luz', href: '/productos/lamparas' },
+    ],
+  },
+];
+---
+
+<Base title="Espacios" description="Nuestros muebles y cuerpos de luz en comedores, livings y proyectos de iluminación." image="ambientes/comedor">
+  <PageIntro title="Espacios" eyebrow="En situ">
+    <p>Así viven nuestras piezas en casas, tiendas y proyectos. Inspírate y descubre cómo combinarlas en tu espacio.</p>
+  </PageIntro>
+
+  {
+    spaces.map((s) => (
+      <section class="container space" id={s.id} aria-labelledby={`t-${s.id}`}>
+        <div class="space__head reveal">
+          <h2 id={`t-${s.id}`} class="title-lg">
+            {s.title}
+          </h2>
+          <p class="lead measure">{s.text}</p>
+        </div>
+        <Gallery images={s.images} />
+      </section>
+    ))
+  }
+
+  <CtaBand
+    title="Asesoría de espacios"
+    text="Te ayudamos a elegir y combinar piezas para tu casa, oficina o proyecto, con muebles personalizados."
+    message="Hola, quisiera asesoría para decorar mi espacio."
+  />
+</Base>
+
+<style>
+  .space + .space {
+    margin-top: clamp(64px, 7vw, 110px);
+  }
+
+  .space__head {
+    display: grid;
+    justify-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .space__head p {
+    margin: 0;
+  }
+</style>

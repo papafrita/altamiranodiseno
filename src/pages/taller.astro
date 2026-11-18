@@ -1,0 +1,150 @@
+---
+import { Image } from 'astro:assets';
+import Base from '~/layouts/Base.astro';
+import TextImage from '~/components/TextImage.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import { site } from '~/data/site';
+import { img } from '~/lib/img';
+---
+
+<Base
+  title="Taller"
+  description="Altamirano Diseño: muebles y cuerpos de luz hechos a mano en nuestro taller de Pucón, con maderas nativas, cuero nacional y acero."
+  image="taller/manos"
+>
+  <section class="hero">
+    <Image src={img('taller/manos')} alt="" widths={[800, 1280, 1800]} sizes="100vw" loading="eager" class="hero__img" />
+    <div class="hero__content">
+      <p class="eyebrow">Nosotros</p>
+      <h1 class="title-xl">El taller</h1>
+    </div>
+  </section>
+
+  <section class="section container center">
+    <p class="eyebrow muted">Altamirano Diseño</p>
+    <blockquote class="manifesto reveal">
+      Entendemos la belleza no como un ejercicio estético superficial, sino como un acercamiento a lo verdadero; una expresión sincera de
+      nuestra búsqueda interior: la calma, la armonía y la honestidad de lo hecho a mano.
+    </blockquote>
+    <p class="lead measure reveal">
+      Somos una tienda y un taller en {site.address.city}. Allí diseñamos y fabricamos cada mueble y cada cuerpo de luz, desde la elección
+      de la madera hasta la última costura del cuero.
+    </p>
+  </section>
+
+  <div class="stack">
+    <TextImage id="maderas" image="taller/madera" title="Maderas locales y nativas" eyebrow="Materiales">
+      <p>
+        Raulí, laurel, aromo, roble y más. Seleccionamos cada tabla por su veta y su color, y la trabajamos con terminaciones lisas,
+        texturadas, blanqueadas o en tonos ceniza y gris.
+      </p>
+      <a class="btn btn--small" href="/historias/maderas-nativas">Leer más</a>
+    </TextImage>
+
+    <TextImage id="cuero" image="taller/cuero" title="Cuero de origen nacional" eyebrow="Materiales" reverse>
+      <p>
+        Asientos y respaldos en cuero chileno, cortado y costurado en el taller. Disponible en natural, negros, azules, rojo, verde oliva,
+        whisky y café moro.
+      </p>
+      <a class="btn btn--small" href="/colores-de-cuero">Ver colores</a>
+    </TextImage>
+
+    <TextImage id="acero" image="taller/acero-soldadura" title="Acero y madera" eyebrow="Oficio">
+      <p>
+        Forjamos y soldamos bases de mesas, taburetes y sillas. El acero aporta sutileza y un toque contemporáneo a cada espacio.
+      </p>
+      <a class="btn btn--small" href="/historias/acero-y-madera">Leer más</a>
+    </TextImage>
+
+    <TextImage id="luz" image="taller/lamparas-artesano" title="Cuerpos de luz" eyebrow="Oficio" reverse>
+      <p>
+        Cada obra toma forma a partir de un proceso artesanal meticuloso. El resultado es una escultura de luz única y original,
+        resistente y sólida.
+      </p>
+      <a class="btn btn--small" href="/productos/lamparas">Ver lámparas</a>
+    </TextImage>
+  </div>
+
+  <section class="section container">
+    <ul class="strip">
+      {
+        ['taller/cuero-detalle', 'taller/acero-forja', 'taller/acero-fuego', 'taller/lamparas-ramas'].map((name) => (
+          <li class="reveal">
+            <Image src={img(name)} alt="" widths={[400, 700]} sizes="(max-width: 640px) 50vw, 25vw" />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <CtaBand title="Visita el taller" text={`Te esperamos en ${site.address.street}, ${site.address.city}. Conversemos sobre tu proyecto.`} />
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    place-items: center;
+    height: clamp(380px, 62vh, 720px);
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
+  }
+
+  .hero__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 55%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 14px;
+  }
+
+  .manifesto {
+    max-width: 30ch;
+    margin: 22px auto 32px;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    line-height: 1.35;
+    font-style: italic;
+  }
+
+  .stack {
+    display: grid;
+    gap: clamp(64px, 8vw, 120px);
+  }
+
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .strip :global(img) {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+  }
+
+  @media (max-width: 640px) {
+    .strip {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

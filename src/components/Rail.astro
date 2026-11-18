@@ -1,0 +1,40 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  label: string;
+  /** Item width on desktop, as CSS length. Defaults to four items per row. */
+  item?: string;
+  itemMd?: string;
+  buttonTop?: string;
+}
+
+const { label, item, itemMd, buttonTop } = Astro.props;
+const style = [
+  item && `--rail-item: ${item}`,
+  itemMd && `--rail-item-md: ${itemMd}`,
+  buttonTop && `--rail-btn-top: ${buttonTop}`,
+]
+  .filter(Boolean)
+  .join(';');
+---
+
+<div class="rail" data-rail style={style || undefined}>
+  <button class="rail__btn rail__btn--prev" type="button" aria-label={`${label}: anterior`}>
+    <Icon name="prev" size={18} />
+  </button>
+  <ul class="rail__track" role="list" aria-label={label}>
+    <slot />
+  </ul>
+  <button class="rail__btn rail__btn--next" type="button" aria-label={`${label}: siguiente`}>
+    <Icon name="next" size={18} />
+  </button>
+</div>
+
+<style>
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>

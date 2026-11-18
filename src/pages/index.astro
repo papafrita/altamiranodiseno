@@ -1,0 +1,245 @@
+---
+import { Image } from 'astro:assets';
+import Base from '~/layouts/Base.astro';
+import Slideshow, { type Slide } from '~/components/Slideshow.astro';
+import Rail from '~/components/Rail.astro';
+import ProductCard from '~/components/ProductCard.astro';
+import StoryCard from '~/components/StoryCard.astro';
+import TextImage from '~/components/TextImage.astro';
+import { categories, productsInLine } from '~/data/catalog';
+import { stories } from '~/data/stories';
+import { mailLink, whatsappLink } from '~/data/site';
+import { img } from '~/lib/img';
+
+const hero: Slide[] = [
+  {
+    image: 'ambientes/mesas',
+    eyebrow: 'Catálogo 2026',
+    title: 'Hecho a mano en Pucón',
+    subtitle: 'Muebles de autor en maderas nativas, cuero y acero',
+    cta: { label: 'Explorar', href: '/productos' },
+  },
+  {
+    image: 'ambientes/portada',
+    eyebrow: 'Nuestra silla insignia',
+    title: 'Silla Altamirano',
+    subtitle: 'Raulí, aromo y cuero de origen nacional',
+    cta: { label: 'Explorar', href: '/productos/sillas#silla-altamirano' },
+    position: 'center 62%',
+  },
+  {
+    image: 'taller/manos',
+    eyebrow: 'El taller',
+    title: 'Maderas nativas',
+    subtitle: 'Raulí, laurel, aromo, roble y más',
+    cta: { label: 'Conocer el taller', href: '/taller' },
+    position: 'center 55%',
+  },
+  {
+    image: 'textiles/sofa',
+    eyebrow: 'Textiles, arte y cerámica',
+    title: 'Para cada espacio',
+    subtitle: 'Piezas que acompañan y completan nuestros muebles',
+    cta: { label: 'Explorar', href: '/productos/textiles' },
+  },
+];
+
+const inDepth: Slide[] = [
+  {
+    image: 'ambientes/lampara-luna-living',
+    eyebrow: 'En profundidad',
+    title: 'Cuerpos de luz',
+    subtitle: 'Esculturas de luz únicas y originales',
+    cta: { label: 'Explorar', href: '/productos/lamparas' },
+    position: 'center 45%',
+  },
+  {
+    image: 'ambientes/mesa-vidrio-comedor',
+    eyebrow: 'En profundidad',
+    title: 'Acero y madera',
+    subtitle: 'Diseños únicos para el comedor',
+    cta: { label: 'Explorar', href: '/productos/mesas' },
+  },
+  {
+    image: 'ambientes/taburetes',
+    eyebrow: 'En profundidad',
+    title: 'Taburetes',
+    subtitle: 'Raulí, aromo, fierro y acero',
+    cta: { label: 'Explorar', href: '/productos/taburetes' },
+  },
+  {
+    image: 'ambientes/mesa-centro-alfombra',
+    eyebrow: 'En profundidad',
+    title: 'Mesas de centro',
+    subtitle: 'Maderas nativas en gran formato',
+    cta: { label: 'Explorar', href: '/productos/mesas-de-centro' },
+  },
+];
+
+const featured = [...productsInLine('silla-altamirano'), ...productsInLine('sitial-altamirano')];
+---
+
+<Base>
+  <Slideshow slides={hero} label="Destacados" priority />
+
+  <section class="section container" aria-labelledby="por-tipo">
+    <div class="section-head reveal">
+      <h2 id="por-tipo" class="title-lg">Ver productos por tipo</h2>
+    </div>
+    <div class="reveal">
+      <Rail label="Productos por tipo" item="calc((100% - 4 * 20px) / 5)" buttonTop="38%">
+        {
+          categories.map((c) => (
+            <li>
+              <a class="type" href={`/productos/${c.slug}`}>
+                <span class="type__media">
+                  <Image src={img(c.cover)} alt="" widths={[360, 540]} sizes="(max-width: 640px) 72vw, (max-width: 1024px) 40vw, 20vw" />
+                </span>
+                <span class="type__label">{c.name}</span>
+              </a>
+            </li>
+          ))
+        }
+      </Rail>
+    </div>
+  </section>
+
+  <section class="section--tight container center reveal" aria-labelledby="destacada">
+    <h2 id="destacada" class="title-lg">Colección destacada</h2>
+    <p class="lead measure featured-text">
+      La línea Altamirano reúne nuestra silla insignia y su versión sitial. Estructuras de raulí y aromo, lisas o texturadas, con
+      asientos de cuero de origen nacional disponibles en nueve colores.
+    </p>
+  </section>
+
+  <section class="section container" aria-labelledby="linea-altamirano">
+    <div class="section-head reveal">
+      <h2 id="linea-altamirano" class="title-lg">Línea Altamirano</h2>
+      <a class="btn btn--small" href="/productos/sillas#silla-altamirano">Ver todo</a>
+    </div>
+    <div class="reveal">
+      <Rail label="Línea Altamirano" buttonTop="33%">
+        {
+          featured.map((p) => (
+            <li>
+              <ProductCard product={p} />
+            </li>
+          ))
+        }
+      </Rail>
+    </div>
+  </section>
+
+  <section class="section--tight container center" aria-labelledby="en-profundidad">
+    <h2 id="en-profundidad" class="title-lg reveal">Explora los productos en profundidad</h2>
+  </section>
+
+  <Slideshow slides={inDepth} label="Productos en profundidad" variant="feature" />
+
+  <section class="section container" aria-labelledby="historias">
+    <div class="section-head reveal">
+      <h2 id="historias" class="title-lg">Desde el taller</h2>
+      <p class="lead measure">
+        Historias sobre los materiales, los oficios y el proceso detrás de cada pieza que fabricamos en Pucón.
+      </p>
+    </div>
+    <div class="stories reveal">
+      {stories.slice(0, 3).map((s) => <StoryCard story={s} />)}
+    </div>
+    <div class="center more reveal">
+      <a class="btn btn--small" href="/historias">Ver todo</a>
+    </div>
+  </section>
+
+  <section class="section--tight container center newsletter reveal" aria-labelledby="novedades">
+    <h2 id="novedades" class="title-lg">Mantente al día con nuestras novedades</h2>
+    <p class="lead measure">Suscríbete para recibir lanzamientos, nuevas piezas y noticias del taller.</p>
+    <a class="btn btn--solid" href={mailLink('Quiero recibir novedades', 'Hola, me gustaría recibir las novedades de Altamirano Diseño.')}>
+      Suscribirme
+    </a>
+  </section>
+
+  <div class="section">
+    <TextImage image="ambientes/living" title="Hablemos" eyebrow="Asesoría">
+      <p>
+        Cada proyecto es único. Te asesoramos para decorar tu espacio con muebles personalizados: elegir las piezas, definir maderas,
+        terminaciones y colores de cuero, o diseñar algo a la medida.
+      </p>
+      <div class="actions">
+        <a class="btn btn--solid" href="/contacto">Contáctanos</a>
+        <a class="btn" href={whatsappLink('Hola, quisiera asesoría para mi espacio.')} target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </TextImage>
+  </div>
+</Base>
+
+<style>
+  .type {
+    display: grid;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .type__media {
+    display: block;
+    overflow: hidden;
+    background: var(--tile);
+  }
+
+  .type__media :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .type:hover .type__media :global(img) {
+    transform: scale(1.05);
+  }
+
+  .type__label {
+    font-family: var(--sans);
+    font-size: 0.875rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .featured-text {
+    margin-top: 22px;
+    margin-bottom: 0;
+  }
+
+  .stories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(20px, 3vw, 40px);
+  }
+
+  .more {
+    margin-top: 48px;
+  }
+
+  .newsletter {
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+    padding-top: 0;
+  }
+
+  .newsletter p {
+    margin: 0 auto 6px;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  @media (max-width: 900px) {
+    .stories {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+  }
+</style>

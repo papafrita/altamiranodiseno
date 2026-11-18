@@ -1,0 +1,439 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { nav } from '~/data/nav';
+import { site, whatsappLink } from '~/data/site';
+import { img } from '~/lib/img';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`) || (href === '/productos' && path.startsWith('/producto/'));
+---
+
+<header class="site-header" data-header>
+  <div class="bar container">
+    <div class="bar__side">
+      <button class="icon-btn mobile-only" type="button" data-menu-open aria-label="Abrir menú" aria-controls="mobile-menu" aria-expanded="false">
+        <Icon name="menu" size={22} />
+      </button>
+      <button class="icon-btn desktop-only" type="button" data-search-open aria-label="Buscar">
+        <Icon name="search" />
+      </button>
+    </div>
+
+    <a class="logo" href="/" aria-label={`${site.name}, inicio`}>
+      <span class="logo__box">
+        <Image src={img('marca/logo')} alt="" width={240} loading="eager" class="logo__img" />
+      </span>
+    </a>
+
+    <div class="bar__side bar__side--end">
+      <a class="icon-btn desktop-only" href={site.instagram.url} target="_blank" rel="noopener" aria-label="Instagram">
+        <Icon name="instagram" />
+      </a>
+      <a class="bar__cta desktop-only link-underline" href={whatsappLink('Hola, quisiera cotizar un mueble.')} target="_blank" rel="noopener">
+        Cotizar
+      </a>
+      <button class="icon-btn mobile-only" type="button" data-search-open aria-label="Buscar">
+        <Icon name="search" />
+      </button>
+    </div>
+  </div>
+
+  <nav class="primary-nav desktop-only" aria-label="Principal">
+    <ul class="primary-nav__list">
+      {
+        nav.map((group) => (
+          <li class="nav-item">
+            <a class:list={['nav-item__link', { 'is-active': isActive(group.href) }]} href={group.href}>
+              {group.label}
+            </a>
+            <div class="mega">
+              <div class="mega__inner container">
+                <div class="mega__cols">
+                  {group.columns.map((col) => (
+                    <div class="mega__col">
+                      <p class="mega__title">{col.title}</p>
+                      <ul>
+                        {col.links.map((l) => (
+                          <li>
+                            <a class="link-underline" href={l.href}>
+                              {l.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+                <div class="mega__featured">
+                  {group.featured.map((f) => (
+                    <a class="mega__card" href={f.href}>
+                      <Image src={img(f.image)} alt="" width={420} widths={[280, 420]} sizes="210px" class="mega__img" />
+                      <span>{f.label}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <div class="drawer" id="mobile-menu" data-drawer hidden>
+    <div class="drawer__head">
+      <span class="eyebrow">Menú</span>
+      <button class="icon-btn" type="button" data-menu-close aria-label="Cerrar menú">
+        <Icon name="close" size={22} />
+      </button>
+    </div>
+    <ul class="drawer__list">
+      {
+        nav.map((group) => (
+          <li>
+            <details>
+              <summary>
+                {group.label}
+                <Icon name="plus" size={16} />
+              </summary>
+              <ul>
+                {group.columns.flatMap((c) => c.links).map((l) => (
+                  <li>
+                    <a href={l.href}>{l.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="drawer__foot">
+      <a class="btn btn--solid" href={whatsappLink('Hola, quisiera cotizar un mueble.')} target="_blank" rel="noopener">
+        <Icon name="whatsapp" size={18} /> Cotizar por WhatsApp
+      </a>
+      <a class="drawer__ig" href={site.instagram.url} target="_blank" rel="noopener">
+        <Icon name="instagram" size={18} />
+        {site.instagram.handle}
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: #fff;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  .site-header.is-scrolled {
+    border-bottom-color: var(--line);
+  }
+
+  .bar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding-top: 18px;
+    padding-bottom: 8px;
+  }
+
+  .bar__side {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .bar__side--end {
+    justify-content: flex-end;
+  }
+
+  .icon-btn {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin: -8px;
+  }
+
+  .bar__cta {
+    margin-left: 18px;
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .logo__box {
+    display: block;
+    padding: 9px 20px 7px;
+    border: 1.5px solid var(--ink);
+  }
+
+  .logo__img {
+    width: 132px;
+    height: auto;
+  }
+
+  .primary-nav__list {
+    display: flex;
+    justify-content: center;
+    gap: clamp(20px, 3vw, 44px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav-item__link {
+    display: block;
+    padding: 14px 0 18px;
+    font-family: var(--sans);
+    font-size: 0.9375rem;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  .nav-item__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: 12px;
+    height: 1px;
+    background: currentColor;
+    transition: right 0.3s ease;
+  }
+
+  .nav-item:hover .nav-item__link::after,
+  .nav-item:focus-within .nav-item__link::after,
+  .nav-item__link.is-active::after {
+    right: 0;
+  }
+
+  .mega {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: #fff;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      visibility 0s linear 0.25s;
+  }
+
+  .nav-item:hover .mega,
+  .nav-item:focus-within .mega {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0.08s, 0.08s, 0s;
+  }
+
+  .site-header.mega-closed .mega {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .mega__inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    padding-top: 36px;
+    padding-bottom: 40px;
+  }
+
+  .mega__cols {
+    display: flex;
+    gap: clamp(32px, 5vw, 80px);
+  }
+
+  .mega__title {
+    margin-bottom: 14px;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .mega__col ul {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 1.125rem;
+  }
+
+  .mega__featured {
+    display: flex;
+    gap: 20px;
+  }
+
+  .mega__card {
+    display: grid;
+    gap: 10px;
+    width: 210px;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .mega__img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    overflow-y: auto;
+  }
+
+  .drawer[hidden] {
+    display: none;
+  }
+
+  .drawer__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px var(--gutter);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .drawer__list {
+    margin: 0;
+    padding: 8px var(--gutter);
+    list-style: none;
+  }
+
+  .drawer__list > li {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .drawer summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    font-family: var(--sans);
+    font-size: 1rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .drawer summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .drawer details[open] summary :global(svg) {
+    transform: rotate(45deg);
+  }
+
+  .drawer details ul {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0 0 20px;
+    list-style: none;
+    font-size: 1.125rem;
+  }
+
+  .drawer__foot {
+    display: grid;
+    gap: 18px;
+    margin-top: auto;
+    padding: 28px var(--gutter) 36px;
+  }
+
+  .drawer__ig {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--sans);
+    letter-spacing: 0.12em;
+  }
+
+  .mobile-only {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .desktop-only {
+      display: none !important;
+    }
+
+    .mobile-only {
+      display: grid;
+    }
+
+    .bar {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    .logo__box {
+      padding: 6px 12px 4px;
+      border-width: 1px;
+    }
+
+    .logo__img {
+      width: 100px;
+    }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const drawer = document.querySelector<HTMLElement>('[data-drawer]')!;
+  const openBtn = document.querySelector<HTMLButtonElement>('[data-menu-open]')!;
+
+  const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 4);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Hide the mega menu right after clicking a link so it does not linger over the next page.
+  header.querySelectorAll('.mega a').forEach((a) =>
+    a.addEventListener('click', () => {
+      header.classList.add('mega-closed');
+      (document.activeElement as HTMLElement | null)?.blur();
+    }),
+  );
+  header.addEventListener('mouseleave', () => header.classList.remove('mega-closed'));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && header.contains(document.activeElement)) {
+      (document.activeElement as HTMLElement).blur();
+    }
+  });
+
+  const setDrawer = (open: boolean) => {
+    drawer.hidden = !open;
+    openBtn.setAttribute('aria-expanded', String(open));
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+  };
+  openBtn.addEventListener('click', () => setDrawer(true));
+  drawer.querySelector('[data-menu-close]')!.addEventListener('click', () => setDrawer(false));
+  drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setDrawer(false)));
+</script>

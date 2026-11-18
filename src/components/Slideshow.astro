@@ -1,0 +1,293 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { img } from '~/lib/img';
+
+export interface Slide {
+  image: string;
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  cta?: { label: string; href: string };
+  /** CSS object-position for the image crop. */
+  position?: string;
+}
+
+interface Props {
+  slides: Slide[];
+  label: string;
+  variant?: 'hero' | 'feature';
+  /** The first slideshow of the page loads its first image eagerly. */
+  priority?: boolean;
+}
+
+const { slides, label, variant = 'hero', priority = false } = Astro.props;
+---
+
+<section class:list={['slideshow', `slideshow--${variant}`]} aria-roledescription="carrusel" aria-label={label} data-slideshow>
+  {
+    slides.map((s, i) => (
+      <div
+        class:list={['slide', { 'is-active': i === 0 }]}
+        role="group"
+        aria-roledescription="diapositiva"
+        aria-label={`${i + 1} de ${slides.length}`}
+        aria-hidden={i === 0 ? undefined : 'true'}
+      >
+        <Image
+          src={img(s.image)}
+          alt=""
+          widths={[800, 1280, 1600, 2000]}
+          sizes="100vw"
+          loading={priority && i === 0 ? 'eager' : 'lazy'}
+          fetchpriority={priority && i === 0 ? 'high' : undefined}
+          class="slide__img"
+          style={s.position ? `object-position: ${s.position}` : undefined}
+        />
+        <div class="slide__content">
+          {s.eyebrow && <p class="eyebrow">{s.eyebrow}</p>}
+          {i === 0 && priority ? <h1 class="slide__title">{s.title}</h1> : <h2 class="slide__title">{s.title}</h2>}
+          {s.subtitle && <p class="slide__subtitle">{s.subtitle}</p>}
+          {s.cta && (
+            <a class="btn btn--light" href={s.cta.href} tabindex={i === 0 ? undefined : -1}>
+              {s.cta.label}
+            </a>
+          )}
+        </div>
+      </div>
+    ))
+  }
+
+  {
+    slides.length > 1 && (
+      <>
+        <button class="slideshow__arrow slideshow__arrow--prev" type="button" aria-label="Diapositiva anterior" data-prev>
+          <Icon name="prev" size={30} />
+        </button>
+        <button class="slideshow__arrow slideshow__arrow--next" type="button" aria-label="Diapositiva siguiente" data-next>
+          <Icon name="next" size={30} />
+        </button>
+        <div class="slideshow__dots">
+          {slides.map((_, i) => (
+            <button type="button" class:list={{ 'is-active': i === 0 }} aria-label={`Ir a la diapositiva ${i + 1}`} data-dot={i} />
+          ))}
+        </div>
+      </>
+    )
+  }
+</section>
+
+<style>
+  .slideshow {
+    position: relative;
+    overflow: hidden;
+    background: #2a2525;
+    color: #fff;
+  }
+
+  .slideshow--hero {
+    height: calc(100svh - var(--header-h));
+    min-height: 520px;
+    max-height: 1000px;
+  }
+
+  .slideshow--feature {
+    height: min(100svh, 56.25vw);
+    min-height: 520px;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 1.1s ease,
+      visibility 0s linear 1.1s;
+  }
+
+  .slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  .slide__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.06);
+    transition: transform 7s ease-out;
+  }
+
+  .slide.is-active .slide__img {
+    transform: scale(1);
+  }
+
+  .slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.38));
+  }
+
+  .slide__content {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    justify-items: center;
+    gap: 18px;
+    padding: 0 var(--gutter);
+    text-align: center;
+    text-shadow: 0 1px 24px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .slide.is-active .slide__content {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.8s ease 0.5s,
+      transform 0.8s ease 0.5s;
+  }
+
+  .slide__title {
+    font-size: clamp(2.2rem, 5.2vw, 4.25rem);
+    letter-spacing: 0.1em;
+    font-weight: 400;
+  }
+
+  .slide__subtitle {
+    margin: 0 0 8px;
+    font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+    font-style: italic;
+  }
+
+  .slideshow__arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    transform: translateY(-50%);
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+  }
+
+  .slideshow__arrow:hover {
+    opacity: 1;
+  }
+
+  .slideshow__arrow--prev {
+    left: 12px;
+  }
+
+  .slideshow__arrow--next {
+    right: 12px;
+  }
+
+  .slideshow__dots {
+    position: absolute;
+    left: 50%;
+    bottom: 28px;
+    z-index: 2;
+    display: flex;
+    gap: 10px;
+    transform: translateX(-50%);
+  }
+
+  .slideshow__dots button {
+    width: 28px;
+    height: 20px;
+    position: relative;
+  }
+
+  .slideshow__dots button::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .slideshow__dots button.is-active::before {
+    height: 2px;
+    background: #fff;
+  }
+
+  @media (max-width: 640px) {
+    .slideshow__arrow {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide,
+    .slide__img {
+      transition: none;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const INTERVAL = 6500;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLElement>('[data-slideshow]').forEach((root) => {
+    const slides = [...root.querySelectorAll<HTMLElement>('.slide')];
+    const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-dot]')];
+    if (slides.length < 2) return;
+    let current = 0;
+    let timer: number | undefined;
+
+    const go = (n: number) => {
+      current = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => {
+        const active = i === current;
+        s.classList.toggle('is-active', active);
+        s.toggleAttribute('aria-hidden', !active);
+        s.querySelectorAll('a').forEach((a) => (active ? a.removeAttribute('tabindex') : a.setAttribute('tabindex', '-1')));
+      });
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === current));
+    };
+
+    const stop = () => window.clearInterval(timer);
+    const start = () => {
+      stop();
+      if (!reduced) timer = window.setInterval(() => go(current + 1), INTERVAL);
+    };
+
+    root.querySelector('[data-prev]')?.addEventListener('click', () => (go(current - 1), start()));
+    root.querySelector('[data-next]')?.addEventListener('click', () => (go(current + 1), start()));
+    dots.forEach((d) => d.addEventListener('click', () => (go(Number(d.dataset.dot)), start())));
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', start);
+
+    let x0: number | null = null;
+    root.addEventListener('touchstart', (e) => (x0 = e.touches[0].clientX), { passive: true });
+    root.addEventListener('touchend', (e) => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 40) go(current + (dx < 0 ? 1 : -1));
+      x0 = null;
+      start();
+    });
+
+    start();
+  });
+</script>

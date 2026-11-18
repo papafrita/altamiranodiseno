@@ -1,0 +1,515 @@
+{
+  "marca/logo": {
+    "src": "4280ef95cad6d053be746ff1834b77ee.png"
+  },
+  "ambientes/portada": {
+    "src": "06fe908752055cfc65e977e6677595c4.jpg"
+  },
+  "ambientes/sillas": {
+    "src": "dd0f7db1d337472161cc2b3322da5a37.png"
+  },
+  "taller/cuero": {
+    "src": "5d551a4bfa5886cccfa0234702e46bb5.jpg"
+  },
+  "taller/cuero-detalle": {
+    "src": "e823b521ba6b8b315b1c577a7a00e4c0.jpg"
+  },
+  "taller/madera": {
+    "src": "95f84ca0e63b8c776dce1efec8defeb1.jpg"
+  },
+  "taller/manos": {
+    "src": "cbd33ee1058bc74f31c2477b8d5711c4.jpg"
+  },
+  "ambientes/silla-altamirano": {
+    "src": "f5f369144aaabd80d238c58bf33eead9.png"
+  },
+  "ambientes/silla-origen": {
+    "src": "17cf58443ad78a45ab633c25e334ef40.png"
+  },
+  "ambientes/silla-lafken": {
+    "src": "fb8f21b6dead548810a907fc9b2dfa08.png"
+  },
+  "ambientes/sitiales": {
+    "src": "a052dfe2e9c05525fd4126d0234c5e09.png"
+  },
+  "ambientes/taburetes": {
+    "src": "815e9caaa69834c64cd3588638458e57.png"
+  },
+  "ambientes/taburetes-detalle": {
+    "src": "e5f747c62fa3fd0df1a8003f3bff94a8.jpg"
+  },
+  "ambientes/taburetes-2": {
+    "src": "e0e56012c50a02a0bd678d2493773c02.png"
+  },
+  "ambientes/taburetes-3": {
+    "src": "54ef8d58848c1e628e8df26bf66388bb.png"
+  },
+  "ambientes/taburetes-4": {
+    "src": "338f48a8f459e3fa9cc446d0c4b8bdbe.png"
+  },
+  "ambientes/butacones": {
+    "src": "1f20fa4aa31780ed4f11b5cd0315d61a.png"
+  },
+  "ambientes/butacones-2": {
+    "src": "223fc8471184fac818ed2f472e6b43f8.png"
+  },
+  "ambientes/butacones-detalle": {
+    "src": "81c21a805671dde7d66759165371abce.png"
+  },
+  "ambientes/mesas": {
+    "src": "ba4d7e46633d639183907156b67bf198.jpg"
+  },
+  "taller/acero-forja": {
+    "src": "ce1aff3fa74649c1e864699f8e9fb9b6.jpg"
+  },
+  "taller/acero-soldadura": {
+    "src": "d1f660190ee7f05b8c670b5689662490.jpg"
+  },
+  "taller/acero-fuego": {
+    "src": "8d68a7fb1938127fa4220bec79fcbe85.jpg"
+  },
+  "ambientes/mesa-acero-negra": {
+    "src": "1f4ecaeb65b38967b90b47f89f75ed4d.png"
+  },
+  "ambientes/mesa-vidrio": {
+    "src": "c13d818ffd67f8f1737e586df3e08ae7.png"
+  },
+  "ambientes/mesa-vidrio-cuadrada": {
+    "src": "9a79ffbc3e3cb31ec35fa18eb6845f6e.png"
+  },
+  "ambientes/mesa-cuadrada": {
+    "src": "96fb57a0ab5fa720f62a1f538e56e3ff.png"
+  },
+  "ambientes/mesa-vidrio-comedor": {
+    "src": "a76406d435d61b3a5b16128074d78ce4.png"
+  },
+  "ambientes/mesas-centro": {
+    "src": "87a524f93ad3ed9ad3f912c9eaadc7bd.png"
+  },
+  "ambientes/mesa-centro-negra": {
+    "src": "712444df635120dfa8802b3001cec418.jpg"
+  },
+  "ambientes/mesa-centro-negra-2": {
+    "src": "d30f0b5402b5c65e32600c217d392e2e.png"
+  },
+  "ambientes/mesa-centro-alfombra": {
+    "src": "e84f5602eb3272b1ed7d3d4211479acb.png"
+  },
+  "ambientes/velador": {
+    "src": "76c11ade9f211dc8f1086d6a50997afa.png"
+  },
+  "ambientes/velador-lampara": {
+    "src": "3d34060ed993951a97e4565e10093866.png"
+  },
+  "ambientes/mesa-lateral": {
+    "src": "d3ce1ee174db57d49907381ed27f8953.png"
+  },
+  "ambientes/velador-lampara-2": {
+    "src": "f29e8e81212a5cf56603e3857810f8da.jpg"
+  },
+  "ambientes/velador-lampara-3": {
+    "src": "bad7571c159f5685e79eab0b54dfcc28.jpg"
+  },
+  "ambientes/arrimo-acero": {
+    "src": "7b6d207dccb36fe61720942a65655a51.png"
+  },
+  "ambientes/arrimo": {
+    "src": "8b05d040c161b3038439583063d223bc.png"
+  },
+  "ambientes/lamparas": {
+    "src": "2d7666d42f521da21d2e7c18cc61e090.jpg"
+  },
+  "taller/lamparas-artesano": {
+    "src": "88daa2db41a95b06d502e14e1f4fdfa5.jpg"
+  },
+  "ambientes/lampara-luna": {
+    "src": "70eb14fe021e964606d3797fd7d0cfcf.jpg"
+  },
+  "taller/lamparas-ramas": {
+    "src": "d3e21b29124fe53e5638924076d01999.jpg"
+  },
+  "taller/lamparas-detalle": {
+    "src": "2f1d606dda47f04b56989f72167b5869.jpg"
+  },
+  "ambientes/lampara-luna-living": {
+    "src": "4548ba1366c80984278ee40e584ebcf6.jpg"
+  },
+  "ambientes/lamparas-columnas": {
+    "src": "a388f3862356056307e1d10e52f86139.jpg"
+  },
+  "ambientes/lampara-techo": {
+    "src": "6f932f10d4296c94c3d1bf9beadfce95.jpg"
+  },
+  "textiles/portada": {
+    "src": "b6aba4badc47477fabd2742ea43423e3.jpg"
+  },
+  "textiles/cojines-1": {
+    "src": "e7321a321f4beccfc2151b242cf693f3.jpg"
+  },
+  "textiles/cojines-2": {
+    "src": "a6d54c5358054958753e75c7f2e54781.jpg"
+  },
+  "textiles/cojines-3": {
+    "src": "a0393f3883689608bcc63809fa4ac50a.jpg"
+  },
+  "textiles/cojines-4": {
+    "src": "9b8d5c0f655423ff854b4867fea5a8d7.jpg"
+  },
+  "textiles/mantas": {
+    "src": "51a12e607197974b572ba21d421e8de1.jpg"
+  },
+  "textiles/sofa": {
+    "src": "bc7fce00ca8751ab20615b1e96c8cfe1.jpg"
+  },
+  "textiles/arte-1": {
+    "src": "439f5f69ba672bf12805dcb2f77d4812.jpg"
+  },
+  "textiles/arte-2": {
+    "src": "24dfe4566cce690c9c804bc7d2d59561.jpg"
+  },
+  "ambientes/living": {
+    "src": "5bfe4c93561e7f84c29f956d22e3b1c9.jpg"
+  },
+  "ambientes/escalera": {
+    "src": "bc18f62e97a66f08959e1c5c9784d22e.jpg"
+  },
+  "ambientes/galeria": {
+    "src": "7478adc54271ba0cd55ec40e05876bf4.png"
+  },
+  "ambientes/contacto": {
+    "src": "62645cce9d52ec471968e4af60c58997.png"
+  },
+  "ambientes/comedor": {
+    "src": "bfa7cdabd99f5b53359edaf8d72ccadb.jpg"
+  },
+  "ambientes/arrimo-espejo": {
+    "src": "207ed2fccafa50157c1e2998bd9af13e.jpg"
+  },
+  "ambientes/comedor-rojo": {
+    "src": "ad42c7f643a0c29dce86a8059c9230b7.jpg"
+  },
+  "cueros/natural": {
+    "src": "8bf1ce5503dbef45a9021ea88ed5020c.png"
+  },
+  "cueros/negro-brillante": {
+    "src": "06c84f43671d3fe6297c20aa25ab674b.png"
+  },
+  "cueros/negro-opaco": {
+    "src": "c38aee7bf8863f314cdb7167cef4e572.png"
+  },
+  "cueros/azul-metalico": {
+    "src": "2bf8dd18f07a06553c7cffdc51c3a8b9.png"
+  },
+  "cueros/azul-marino": {
+    "src": "d32679720fd6d1c0b3031be4a5497c3f.png"
+  },
+  "cueros/rojo": {
+    "src": "b36b82aa3dc50d8e1625454b87f02de2.png"
+  },
+  "cueros/verde-oliva": {
+    "src": "77a5aac5edc15294703cb4749be6a068.png"
+  },
+  "cueros/whisky": {
+    "src": "85817629c4be9f473fefbf790fbc076c.png"
+  },
+  "cueros/cafe-moro": {
+    "src": "41feb6ddc4d793008593217d460f5501.png"
+  },
+  "productos/s2": {
+    "src": "2934e8fb285793dfea8d218b45369032.png",
+    "trim": true
+  },
+  "productos/s3": {
+    "src": "765ab205e07ea6db059ff4f45c52d394.png",
+    "trim": true
+  },
+  "productos/s4": {
+    "src": "f68a7e01d897d4a929555d609872068e.png",
+    "trim": true
+  },
+  "productos/s5": {
+    "src": "e54e4fd477674f89e40c0f24b60bf9bb.png",
+    "trim": true
+  },
+  "productos/s6": {
+    "src": "7525a7996fe9c60f957bb9c60d68820e.png",
+    "trim": true
+  },
+  "productos/s7": {
+    "src": "33385fb3b74f7d81305f617286eb412c.png",
+    "trim": true
+  },
+  "productos/s8": {
+    "src": "a06c227567018ca2caa3c4dcd93f34ca.png",
+    "trim": true
+  },
+  "productos/s9": {
+    "src": "dddd8adf549daf128831ffe61acd05bf.png",
+    "trim": true
+  },
+  "productos/s10": {
+    "src": "a3a4a76d083eb34424ad71ee2aad564d.png",
+    "trim": true
+  },
+  "productos/s10-foto": {
+    "src": "06011837c8e1b852376b1a719f9c8bf0.png"
+  },
+  "productos/s11": {
+    "src": "a2876ac07429dc8da937baae48362735.png",
+    "trim": true
+  },
+  "productos/s11-foto": {
+    "src": "e928e6bfe26aff772791b2723982ebfd.png"
+  },
+  "productos/s12": {
+    "src": "75fdb99ab8f485dbc6df4bd50f322ff0.png",
+    "trim": true
+  },
+  "productos/s12-foto": {
+    "src": "881f0ecbd291f1c7af89ed2e4fb12a2c.png"
+  },
+  "productos/s13": {
+    "src": "db80555ea17f23f3fdafdbf5d19dd0ae.png",
+    "trim": true
+  },
+  "productos/s13-foto": {
+    "src": "9f708d99077e718d80a0d1bed91925ab.png"
+  },
+  "productos/st1": {
+    "src": "bcf41af97314cfdd9d284ae1335e7914.png",
+    "trim": true
+  },
+  "productos/st2": {
+    "src": "1bed5a38d919ea7285a7f4ec28e45e0e.png",
+    "trim": true
+  },
+  "productos/st3": {
+    "src": "a1d044240bf6e1c704c21f16b1672767.png",
+    "trim": true
+  },
+  "productos/st4": {
+    "src": "bf339ecbd81d652f46397aaac8e74db4.png",
+    "trim": true
+  },
+  "productos/ta1": {
+    "src": "5ba27b3036c0e118afc880fa41ce1bc0.png",
+    "trim": true
+  },
+  "productos/ta2": {
+    "src": "09aa8eefec57f8041ca8f356042aac99.png",
+    "trim": true
+  },
+  "productos/ta3": {
+    "src": "769499afd6a3b310e14309b5e87dc36c.png",
+    "trim": true
+  },
+  "productos/ta4": {
+    "src": "f4165e8bc5e4d15053407556d819905f.png",
+    "trim": true
+  },
+  "productos/ta5": {
+    "src": "7dadd1531372059b1574fe0be2a9a02d.png",
+    "trim": true
+  },
+  "productos/ta5-b": {
+    "src": "7e0115c498f67f3c19a20ffb883f1193.png",
+    "trim": true
+  },
+  "productos/ta6": {
+    "src": "33820d562da7fe4f8f7aa009308c68dd.png",
+    "trim": true
+  },
+  "productos/ta7": {
+    "src": "f7bf2a9e80738a32ff25013820f3c211.png",
+    "trim": true
+  },
+  "productos/ta8": {
+    "src": "5f027a6819caafb7e55b9d7c57edcf07.png",
+    "trim": true
+  },
+  "productos/ta8-foto": {
+    "src": "8abe0cf725e20fcb5da74fb674511f36.png"
+  },
+  "productos/ta9": {
+    "src": "54adaceeb8e6232d5d647b9930894944.png",
+    "trim": true
+  },
+  "productos/ta9-foto": {
+    "src": "37755cd1b545e24d17e6fe3813921517.png"
+  },
+  "productos/b2": {
+    "src": "67ce3bda6e0030d5673ddd515b9ac1bb.png",
+    "trim": true
+  },
+  "productos/b3": {
+    "src": "34a68088c12b202688a375459e6049bb.png",
+    "trim": true
+  },
+  "productos/b4": {
+    "src": "30d92ac9682ddd35d3431531b3603410.png",
+    "trim": true
+  },
+  "productos/b5": {
+    "src": "22e2d3e077dadf365fe41869b38d2813.png",
+    "trim": true
+  },
+  "productos/m2": {
+    "src": "694819f05a59958f65c6893b425dbcce.png",
+    "trim": true
+  },
+  "productos/m2-foto": {
+    "src": "3d189c358a291a2002ee34af3582f879.png"
+  },
+  "productos/m3": {
+    "src": "c339ea23fb5b5e52de81a63a5a6fa897.png",
+    "trim": true
+  },
+  "productos/m3-foto": {
+    "src": "f2eaed4a5eeb2fe0e4b2ad9e0595a73c.png"
+  },
+  "productos/m4": {
+    "src": "b67187eceaccd5de6dc49f4bf409037f.png",
+    "trim": true
+  },
+  "productos/m4-foto": {
+    "src": "b357f960b0eea34e210161da7db20b6f.png"
+  },
+  "productos/m5": {
+    "src": "8067988e083255f721565a426d0b70a1.png",
+    "trim": true
+  },
+  "productos/m5-foto": {
+    "src": "65d787997f007d734582c2eb1a51ddae.png"
+  },
+  "productos/m7": {
+    "src": "232d53d36eb78ec634a90ba7c9bd9e9d.png",
+    "trim": true
+  },
+  "productos/m9": {
+    "src": "f1c541235d284f3a003f318988f1b54a.png",
+    "trim": true
+  },
+  "productos/m12": {
+    "src": "867b3eefff6bb803dd3514acd3451f29.png",
+    "trim": true
+  },
+  "productos/m12-foto": {
+    "src": "6815a1dab438e40bfc4447bb0a9927b0.png"
+  },
+  "productos/m13": {
+    "src": "f3cf158341866119c7cc0cb5d221231a.png",
+    "trim": true
+  },
+  "productos/m15": {
+    "src": "98740394547464db33688769035ba654.png",
+    "trim": true
+  },
+  "productos/m16": {
+    "src": "1c057ae1873e5fddc3816f6abff98a7d.png",
+    "trim": true
+  },
+  "productos/mc1": {
+    "src": "f7f2e846c5134b086c47da60fc325a57.png",
+    "trim": true
+  },
+  "productos/mc1-b": {
+    "src": "f3b646096a1dccd469e9cf6c6fc8ce2d.png",
+    "trim": true
+  },
+  "productos/a2": {
+    "src": "11c0aa23a39147b671f5b8d087979f6b.png",
+    "trim": true
+  },
+  "productos/a3": {
+    "src": "a51213ff48517f8c002faffcc7686e8a.png",
+    "trim": true
+  },
+  "productos/a4": {
+    "src": "95801a860f276666b0883eba2b6224d9.png",
+    "trim": true
+  },
+  "productos/a5": {
+    "src": "cebd22fed53a7e59942a2fb6f2e4ef49.png",
+    "trim": true
+  },
+  "productos/so1": {
+    "src": "4e7d5dad3e063bdd7b64154b99e051ea.png",
+    "trim": true
+  },
+  "productos/so2": {
+    "src": "e477c9fcc0a19a9527b293f6c92cf307.png",
+    "trim": true
+  },
+  "productos/so3": {
+    "src": "cf9a25266a4be8e857565ac5759bceb5.png",
+    "trim": true
+  },
+  "productos/so4": {
+    "src": "9e7bb62e888b9b2e6468cc55d14bac42.png",
+    "trim": true
+  },
+  "productos/ve1": {
+    "src": "a53612e18b8b4babea63e1f495f8ca11.png",
+    "trim": true
+  },
+  "productos/ve2": {
+    "src": "2cf8032750bf4a0cb5c1effd8eeb1f12.png",
+    "trim": true
+  },
+  "productos/ve3": {
+    "src": "84766cb6709e461ad3be27475baece61.png",
+    "trim": true
+  },
+  "productos/ve4": {
+    "src": "5953ab9974acc7bc66065dc57b9975d9.png",
+    "trim": true
+  },
+  "productos/m14-foto": {
+    "src": "c89805762877059ae65ff678c7c0c765.png"
+  },
+  "productos/m14-b-foto": {
+    "src": "ccd0ade73fbd581b6d4beb4425453c69.png"
+  },
+  "productos/mc4-foto": {
+    "src": "112d31f80fa4d6194a0232f97590aedd.png"
+  },
+  "productos/mc4-b-foto": {
+    "src": "e9a4f1798027965dd5be7b25737d6790.png"
+  },
+  "productos/mc4-c-foto": {
+    "src": "6db9ff90f6edd4b533f70a93d9dc8143.png"
+  },
+  "productos/la-foto": {
+    "src": "1069f1b96666968ac32b53c840f1ca32.png"
+  },
+  "productos/la2-foto": {
+    "src": "17e7796a12ad59944ac94505e4aa452e.jpg"
+  },
+  "productos/la4-foto": {
+    "src": "f4eaa0b82a6935c09778428e5155b881.png"
+  },
+  "productos/la4-b-foto": {
+    "src": "c587d61f0ac8d96da8fccdf569f22392.png"
+  },
+  "productos/andromeda-foto": {
+    "src": "c4288d7b708b7ab2c422a63e9d566141.jpg"
+  },
+  "productos/la5-foto": {
+    "src": "1679849e527c4e5564d44f81ffaafa0f.png"
+  },
+  "productos/la6-foto": {
+    "src": "a366f20ac89b4590c72b395482776b3a.jpg"
+  },
+  "productos/la7-foto": {
+    "src": "a7a75303ea73a0c8cf0c63606236f9da.png"
+  },
+  "productos/la8-foto": {
+    "src": "61d76433959c23023b39bac9020f51a7.png"
+  },
+  "productos/la9-foto": {
+    "src": "296ad8c9d1b399ade7be5a4f0e76a00f.png"
+  },
+  "productos/la10-foto": {
+    "src": "fb39dd4b99ebcb7d6c08ec728167d759.png"
+  }
+}

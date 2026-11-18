@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets';
+import type { Story } from '~/data/stories';
+import { img } from '~/lib/img';
+
+interface Props {
+  story: Story;
+}
+
+const { story } = Astro.props;
+---
+
+<a class="story" href={`/historias/${story.slug}`}>
+  <div class="story__media">
+    <Image src={img(story.cover)} alt="" widths={[480, 720, 960]} sizes="(max-width: 900px) 100vw, 33vw" />
+  </div>
+  <h3 class="story__title">{story.title}</h3>
+  <p class="story__quote">“{story.quote}”</p>
+</a>
+
+<style>
+  .story {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .story__media {
+    overflow: hidden;
+  }
+
+  .story__media :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .story:hover .story__media :global(img) {
+    transform: scale(1.04);
+  }
+
+  .story__title {
+    margin-top: 6px;
+    font-size: 1.3rem;
+  }
+
+  .story__quote {
+    margin: 0 auto;
+    max-width: 40ch;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+</style>

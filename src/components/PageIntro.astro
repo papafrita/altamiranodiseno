@@ -1,0 +1,61 @@
+---
+interface Props {
+  title: string;
+  eyebrow?: string;
+  crumbs?: { label: string; href: string }[];
+}
+
+const { title, eyebrow, crumbs } = Astro.props;
+---
+
+<header class="intro container">
+  {
+    crumbs && (
+      <nav class="crumbs" aria-label="Ruta de navegación">
+        <a href="/">Inicio</a>
+        {crumbs.map((c) => (
+          <>
+            <span aria-hidden="true">/</span>
+            <a href={c.href}>{c.label}</a>
+          </>
+        ))}
+      </nav>
+    )
+  }
+  {eyebrow && <p class="eyebrow muted">{eyebrow}</p>}
+  <h1 class="title-xl">{title}</h1>
+  <div class="intro__text lead measure">
+    <slot />
+  </div>
+</header>
+
+<style>
+  .intro {
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+    padding-top: clamp(40px, 6vw, 84px);
+    padding-bottom: clamp(32px, 4vw, 56px);
+    text-align: center;
+  }
+
+  .intro__text :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .crumbs a:hover {
+    color: var(--ink);
+  }
+</style>

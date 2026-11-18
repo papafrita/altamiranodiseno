@@ -1,0 +1,36 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageIntro from '~/components/PageIntro.astro';
+import StoryCard from '~/components/StoryCard.astro';
+import { stories } from '~/data/stories';
+---
+
+<Base title="Historias" description="Historias sobre los materiales, los oficios y el proceso detrás de cada pieza de Altamirano Diseño." image="taller/manos">
+  <PageIntro title="Historias" eyebrow="Desde el taller">
+    <p>Los materiales, los oficios y el proceso detrás de cada pieza que fabricamos en Pucón.</p>
+  </PageIntro>
+
+  <section class="container grid">
+    {
+      stories.map((s) => (
+        <div class="reveal">
+          <StoryCard story={s} />
+        </div>
+      ))
+    }
+  </section>
+</Base>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 64px clamp(20px, 3vw, 40px);
+  }
+
+  @media (max-width: 760px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

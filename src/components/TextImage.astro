@@ -1,0 +1,66 @@
+---
+import { Image } from 'astro:assets';
+import { img } from '~/lib/img';
+
+interface Props {
+  image: string;
+  title: string;
+  eyebrow?: string;
+  reverse?: boolean;
+  id?: string;
+}
+
+const { image, title, eyebrow, reverse = false, id } = Astro.props;
+---
+
+<section class:list={['ti container reveal', { 'ti--reverse': reverse }]} id={id}>
+  <div class="ti__text">
+    {eyebrow && <p class="eyebrow muted">{eyebrow}</p>}
+    <h2 class="title-lg">{title}</h2>
+    <slot />
+  </div>
+  <div class="ti__media">
+    <Image src={img(image)} alt="" widths={[600, 900, 1300]} sizes="(max-width: 900px) 100vw, 50vw" />
+  </div>
+</section>
+
+<style>
+  .ti {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: clamp(32px, 6vw, 96px);
+  }
+
+  .ti__text {
+    display: grid;
+    justify-items: start;
+    gap: 20px;
+    max-width: 52ch;
+    justify-self: center;
+  }
+
+  .ti__text :global(p) {
+    margin: 0;
+  }
+
+  .ti--reverse .ti__media {
+    order: -1;
+  }
+
+  .ti__media :global(img) {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  @media (max-width: 900px) {
+    .ti {
+      grid-template-columns: 1fr;
+    }
+
+    .ti__media {
+      order: -1;
+    }
+  }
+</style>

@@ -1,0 +1,115 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import Base from '~/layouts/Base.astro';
+import StoryCard from '~/components/StoryCard.astro';
+import { stories, type Story } from '~/data/stories';
+import { img } from '~/lib/img';
+
+export const getStaticPaths = (() => stories.map((s) => ({ params: { slug: s.slug }, props: { story: s } }))) satisfies GetStaticPaths;
+
+const { story } = Astro.props as { story: Story };
+const others = stories.filter((s) => s.slug !== story.slug).slice(0, 3);
+---
+
+<Base title={story.title} description={story.intro} image={story.cover}>
+  <article>
+    <header class="head container">
+      <a class="eyebrow muted" href="/historias">Historias</a>
+      <h1 class="title-xl">{story.title}</h1>
+      <p class="quote">“{story.quote}”</p>
+    </header>
+
+    <div class="cover container">
+      <Image src={img(story.cover)} alt="" widths={[800, 1280, 1800]} sizes="100vw" loading="eager" />
+    </div>
+
+    <div class="body container">
+      <p class="lead">{story.intro}</p>
+      {story.body.map((p) => <p>{p}</p>)}
+    </div>
+
+    <div class="pair container">
+      {story.images.map((name) => <Image src={img(name)} alt="" widths={[600, 900, 1200]} sizes="(max-width: 640px) 100vw, 50vw" class="reveal" />)}
+    </div>
+
+    {
+      story.related && (
+        <div class="center">
+          <a class="btn" href={story.related.href}>
+            {story.related.label}
+          </a>
+        </div>
+      )
+    }
+  </article>
+
+  <section class="section container" aria-labelledby="mas-historias">
+    <div class="section-head">
+      <h2 id="mas-historias" class="title-lg">Más historias</h2>
+    </div>
+    <div class="others">{others.map((s) => <StoryCard story={s} />)}</div>
+  </section>
+</Base>
+
+<style>
+  .head {
+    display: grid;
+    justify-items: center;
+    gap: 18px;
+    padding-top: clamp(40px, 6vw, 84px);
+    padding-bottom: 40px;
+    text-align: center;
+  }
+
+  .quote {
+    max-width: 40ch;
+    margin: 0;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+
+  .cover :global(img) {
+    width: 100%;
+    height: clamp(300px, 50vw, 680px);
+    object-fit: cover;
+  }
+
+  .body {
+    max-width: 760px;
+    padding-block: clamp(40px, 5vw, 72px);
+  }
+
+  .pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .pair :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  .others {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(20px, 3vw, 40px);
+  }
+
+  @media (max-width: 900px) {
+    .others {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .pair {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

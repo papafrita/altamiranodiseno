@@ -1,0 +1,60 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageIntro from '~/components/PageIntro.astro';
+import CategoryNav from '~/components/CategoryNav.astro';
+import ProductGrid from '~/components/ProductGrid.astro';
+import Gallery from '~/components/Gallery.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import { categories, products, productsIn } from '~/data/catalog';
+---
+
+<Base title="Productos" description="Sillas, sitiales, taburetes, butacones, mesas, arrimos, sofás, veladores y lámparas hechos a mano en Pucón.">
+  <PageIntro title="Productos" eyebrow="Catálogo 2026">
+    <p>
+      {products.length} piezas diseñadas y fabricadas en nuestro taller de Pucón, en maderas nativas, cuero de origen nacional y acero.
+    </p>
+  </PageIntro>
+
+  <CategoryNav />
+
+  {
+    categories.map((c) => {
+      const items = productsIn(c.slug);
+      return (
+        <section class="container block" id={c.slug} aria-labelledby={`t-${c.slug}`}>
+          <div class="block__head">
+            <h2 id={`t-${c.slug}`} class="title-md">
+              {c.name}
+            </h2>
+            <a class="btn btn--small" href={`/productos/${c.slug}`}>
+              Ver {c.name.toLowerCase()}
+            </a>
+          </div>
+          {items.length ? (
+            <ProductGrid products={items} />
+          ) : (
+            <Gallery images={(c.gallery ?? []).slice(0, 6).map((image) => ({ image }))} />
+          )}
+        </section>
+      );
+    })
+  }
+
+  <CtaBand />
+</Base>
+
+<style>
+  .block + .block {
+    margin-top: clamp(64px, 7vw, 110px);
+  }
+
+  .block__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+</style>

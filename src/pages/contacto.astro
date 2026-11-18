@@ -1,0 +1,235 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageIntro from '~/components/PageIntro.astro';
+import TextImage from '~/components/TextImage.astro';
+import Icon from '~/components/Icon.astro';
+import { site, whatsappLink } from '~/data/site';
+---
+
+<Base title="Contacto" description={`Visítanos en ${site.address.street}, ${site.address.city}, o escríbenos por WhatsApp y correo.`} image="ambientes/contacto">
+  <PageIntro title="Contacto" eyebrow="Hablemos">
+    <p>Cotizaciones, pedidos a medida o asesoría para tu espacio: escríbenos y conversemos.</p>
+  </PageIntro>
+
+  <section class="container info">
+    <div class="info__item">
+      <h2 class="info__title">Tienda y taller</h2>
+      <p>
+        {site.address.street}<br />
+        {site.address.city}, {site.address.region}<br />
+        {site.address.country}
+      </p>
+      <a class="link-underline" href={site.mapsUrl} target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+    <div class="info__item">
+      <h2 class="info__title">Teléfonos</h2>
+      <p>
+        {
+          site.phones.map((p) => (
+            <>
+              <a class="link-underline" href={p.href}>
+                {p.label}
+              </a>
+              <br />
+            </>
+          ))
+        }
+      </p>
+      <a class="link-underline" href={whatsappLink('Hola, quisiera más información.')} target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    </div>
+    <div class="info__item">
+      <h2 class="info__title">Correo</h2>
+      <p><a class="link-underline" href={`mailto:${site.email}`}>{site.email}</a></p>
+    </div>
+    <div class="info__item">
+      <h2 class="info__title">Instagram</h2>
+      <p><a class="link-underline" href={site.instagram.url} target="_blank" rel="noopener">{site.instagram.handle}</a></p>
+    </div>
+  </section>
+
+  <section class="section container form-wrap" aria-labelledby="escribenos">
+    <div class="section-head">
+      <h2 id="escribenos" class="title-lg">Escríbenos</h2>
+      <p class="muted">Al enviar se abrirá tu aplicación de correo con el mensaje listo.</p>
+    </div>
+    <form class="form" data-contact-form>
+      <label>
+        <span>Nombre</span>
+        <input name="nombre" required autocomplete="name" />
+      </label>
+      <label>
+        <span>Teléfono</span>
+        <input name="telefono" type="tel" autocomplete="tel" />
+      </label>
+      <label class="full">
+        <span>Asunto</span>
+        <select name="asunto">
+          <option>Cotización</option>
+          <option>Mueble a medida</option>
+          <option>Asesoría de espacios</option>
+          <option>Otro</option>
+        </select>
+      </label>
+      <label class="full">
+        <span>Mensaje</span>
+        <textarea name="mensaje" rows="6" required></textarea>
+      </label>
+      <div class="full form__actions">
+        <button class="btn btn--solid" type="submit">
+          <Icon name="mail" size={18} /> Enviar por correo
+        </button>
+        <button class="btn" type="button" data-send-whatsapp>
+          <Icon name="whatsapp" size={18} /> Enviar por WhatsApp
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <TextImage id="asesoria" image="ambientes/arrimo-espejo" title="Asesoría de espacios" eyebrow="Servicio">
+    <p>
+      Te asesoramos para decorar tu espacio con muebles personalizados. Te ayudamos a elegir piezas, definir maderas, terminaciones y
+      colores de cuero, y a sumar textiles, arte y cerámica.
+    </p>
+    <a class="btn btn--solid" href={whatsappLink('Hola, quisiera asesoría para decorar mi espacio.')} target="_blank" rel="noopener">
+      Agendar asesoría
+    </a>
+  </TextImage>
+
+  <section class="section container" id="tienda" aria-labelledby="visitanos">
+    <div class="section-head">
+      <h2 id="visitanos" class="title-lg">Visítanos</h2>
+      <p class="lead">{site.address.street}, {site.address.city}</p>
+    </div>
+    <div class="map">
+      <iframe title={`Mapa: ${site.address.street}, ${site.address.city}`} src={site.mapsEmbed} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    padding-block: 32px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .info__title {
+    margin-bottom: 12px;
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+  }
+
+  .info p {
+    margin-bottom: 0.6em;
+  }
+
+  .form-wrap {
+    max-width: 860px;
+  }
+
+  .form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .form label {
+    display: grid;
+    gap: 8px;
+  }
+
+  .form label span {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .form input,
+  .form select,
+  .form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 0;
+    background: #fff;
+    font: inherit;
+    color: inherit;
+  }
+
+  .form input:focus,
+  .form select:focus,
+  .form textarea:focus {
+    outline: none;
+    border-color: var(--ink);
+  }
+
+  .full {
+    grid-column: 1 / -1;
+  }
+
+  .form__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .map {
+    aspect-ratio: 16 / 7;
+    background: var(--tile);
+  }
+
+  .map iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    filter: grayscale(0.85) contrast(1.05);
+  }
+
+  @media (max-width: 900px) {
+    .info {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .map {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .info,
+    .form {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  import { site } from '~/data/site';
+
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]')!;
+
+  const compose = () => {
+    const data = new FormData(form);
+    const subject = `${data.get('asunto')} - ${data.get('nombre')}`;
+    const lines = [String(data.get('mensaje') ?? ''), '', `${data.get('nombre')}`, String(data.get('telefono') ?? '')];
+    return { subject, body: lines.join('\n').trim() };
+  };
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const { subject, body } = compose();
+    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+
+  form.querySelector('[data-send-whatsapp]')!.addEventListener('click', () => {
+    if (!form.reportValidity()) return;
+    const { subject, body } = compose();
+    window.open(`https://wa.me/${site.whatsapp}?text=${encodeURIComponent(`${subject}\n\n${body}`)}`, '_blank', 'noopener');
+  });
+</script>

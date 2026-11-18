@@ -1,0 +1,219 @@
+---
+import { getImage } from 'astro:assets';
+import Icon from './Icon.astro';
+import { categories, lineOf, products, categoryOf } from '~/data/catalog';
+import { img } from '~/lib/img';
+
+const index = await Promise.all(
+  products.map(async (p) => ({
+    name: p.name,
+    meta: [categoryOf(p).name, ...p.materials].join(' · '),
+    terms: [p.name, p.code, categoryOf(p).name, lineOf(p)?.name ?? '', ...p.materials, p.dimensions ?? '']
+      .join(' ')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase(),
+    href: `/producto/${p.slug}`,
+    thumb: (await getImage({ src: img(p.image), width: 120, format: 'webp' })).src,
+    cutout: p.cutout,
+  })),
+);
+---
+
+<dialog class="search" data-search aria-label="Buscar productos">
+  <div class="search__inner container">
+    <form class="search__form" method="dialog" role="search">
+      <Icon name="search" size={22} />
+      <label class="visually-hidden" for="search-input">Buscar</label>
+      <input id="search-input" type="search" placeholder="Buscar sillas, mesas, raulí, cuero…" autocomplete="off" data-search-input />
+      <button type="button" class="search__close" data-search-close aria-label="Cerrar búsqueda">
+        <Icon name="close" size={22} />
+      </button>
+    </form>
+    <div class="search__suggest" data-search-suggest>
+      <p class="eyebrow muted">Explorar por tipo</p>
+      <ul>
+        {categories.map((c) => (
+          <li>
+            <a class="link-underline" href={`/productos/${c.slug}`}>{c.name}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <ul class="search__results" data-search-results aria-live="polite"></ul>
+  </div>
+  <script type="application/json" data-search-index set:html={JSON.stringify(index)} />
+</dialog>
+
+<style>
+  .search {
+    width: 100%;
+    max-width: none;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: #fff;
+    color: var(--ink);
+    overflow-y: auto;
+  }
+
+  .search::backdrop {
+    background: rgba(30, 26, 26, 0.35);
+  }
+
+  .search__inner {
+    padding-top: 28px;
+    padding-bottom: 48px;
+  }
+
+  .search__form {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .search__form input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: none;
+    font-family: var(--serif);
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    color: inherit;
+  }
+
+  .search__form input::-webkit-search-cancel-button {
+    appearance: none;
+  }
+
+  .search__close {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+  }
+
+  .search__suggest {
+    padding-top: 28px;
+  }
+
+  .search__suggest ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 28px;
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 1.15rem;
+  }
+
+  .search__results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 8px 28px;
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .search__results :global(a) {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0;
+  }
+
+  .search__results :global(img) {
+    width: 64px;
+    height: 64px;
+    flex: none;
+    object-fit: cover;
+    background: var(--tile);
+  }
+
+  .search__results :global(img.is-cutout) {
+    object-fit: contain;
+    padding: 4px;
+  }
+
+  .search__results :global(strong) {
+    display: block;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 0.8125rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .search__results :global(span) {
+    font-size: 1rem;
+    color: var(--ink-soft);
+  }
+
+  .search__results :global(.search__empty) {
+    grid-column: 1 / -1;
+    color: var(--ink-soft);
+  }
+</style>
+
+<script>
+  type Entry = { name: string; meta: string; terms: string; href: string; thumb: string; cutout: boolean };
+
+  const dialog = document.querySelector<HTMLDialogElement>('[data-search]')!;
+  const input = dialog.querySelector<HTMLInputElement>('[data-search-input]')!;
+  const results = dialog.querySelector<HTMLUListElement>('[data-search-results]')!;
+  const suggest = dialog.querySelector<HTMLElement>('[data-search-suggest]')!;
+  const index: Entry[] = JSON.parse(dialog.querySelector('[data-search-index]')!.textContent!);
+
+  const normalize = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+
+  const render = () => {
+    const words = normalize(input.value).split(/\s+/).filter(Boolean);
+    suggest.hidden = words.length > 0;
+    results.replaceChildren();
+    if (!words.length) return;
+    const found = index.filter((e) => words.every((w) => e.terms.includes(w))).slice(0, 24);
+    if (!found.length) {
+      const li = document.createElement('li');
+      li.className = 'search__empty';
+      li.textContent = 'No encontramos productos para esa búsqueda.';
+      results.append(li);
+      return;
+    }
+    for (const e of found) {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = e.href;
+      const im = document.createElement('img');
+      im.src = e.thumb;
+      im.alt = '';
+      im.loading = 'lazy';
+      if (e.cutout) im.className = 'is-cutout';
+      const text = document.createElement('div');
+      const strong = document.createElement('strong');
+      strong.textContent = e.name;
+      const meta = document.createElement('span');
+      meta.textContent = e.meta;
+      text.append(strong, meta);
+      a.append(im, text);
+      li.append(a);
+      results.append(li);
+    }
+  };
+
+  input.addEventListener('input', render);
+  document.querySelectorAll('[data-search-open]').forEach((b) =>
+    b.addEventListener('click', () => {
+      dialog.showModal();
+      input.focus();
+    }),
+  );
+  dialog.querySelector('[data-search-close]')!.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+</script>

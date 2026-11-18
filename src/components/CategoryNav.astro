@@ -1,0 +1,73 @@
+---
+import { categories } from '~/data/catalog';
+
+interface Props {
+  current?: string;
+}
+
+const { current } = Astro.props;
+---
+
+<nav class="catnav container" aria-label="Categorías">
+  <ul>
+    <li>
+      <a href="/productos" aria-current={current ? undefined : 'page'}>Todos</a>
+    </li>
+    {
+      categories.map((c) => (
+        <li>
+          <a href={`/productos/${c.slug}`} aria-current={current === c.slug ? 'page' : undefined}>
+            {c.name}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .catnav {
+    margin-bottom: clamp(32px, 4vw, 56px);
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 26px;
+    margin: 0;
+    padding: 18px 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  a {
+    color: var(--ink-soft);
+    transition: color 0.2s ease;
+  }
+
+  a:hover,
+  a[aria-current='page'] {
+    color: var(--ink);
+  }
+
+  a[aria-current='page'] {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+
+  @media (max-width: 640px) {
+    ul {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+  }
+</style>

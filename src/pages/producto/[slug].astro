@@ -1,0 +1,407 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import Base from '~/layouts/Base.astro';
+import Rail from '~/components/Rail.astro';
+import ProductCard from '~/components/ProductCard.astro';
+import Icon from '~/components/Icon.astro';
+import { categoryOf, leatherColors, lineOf, products, type Product } from '~/data/catalog';
+import { mailLink, site, whatsappLink } from '~/data/site';
+import { img } from '~/lib/img';
+
+export const getStaticPaths = (() => products.map((p) => ({ params: { slug: p.slug }, props: { product: p } }))) satisfies GetStaticPaths;
+
+const { product } = Astro.props as { product: Product };
+const category = categoryOf(product);
+const line = lineOf(product);
+
+const media = [
+  { image: product.image, cutout: product.cutout },
+  ...product.gallery.map((g) => ({ image: g, cutout: !g.endsWith('-foto') })),
+];
+
+const sameLine = line ? products.filter((p) => p.line === line.slug && p.slug !== product.slug) : [];
+const sameCategory = products.filter((p) => p.category === product.category && p.slug !== product.slug && !sameLine.includes(p));
+const related = [...sameLine, ...sameCategory].slice(0, 8);
+
+const quote = `Hola, quisiera cotizar ${product.name} (${product.materials.join(', ')}).`;
+---
+
+<Base title={product.name} description={`${product.name}: ${product.materials.join(', ')}. Hecho a mano en Pucón.`} image={product.image}>
+  <div class="container">
+    <nav class="crumbs" aria-label="Ruta de navegación">
+      <a href="/">Inicio</a>
+      <span aria-hidden="true">/</span>
+      <a href="/productos">Productos</a>
+      <span aria-hidden="true">/</span>
+      <a href={`/productos/${category.slug}`}>{category.name}</a>
+      {
+        line && (
+          <>
+            <span aria-hidden="true">/</span>
+            <a href={`/productos/${category.slug}#${line.slug}`}>{line.name}</a>
+          </>
+        )
+      }
+    </nav>
+  </div>
+
+  <article class="product container">
+    <div class="product__media" data-gallery>
+      <div class="product__stage">
+        {
+          media.map((m, i) => (
+            <div class:list={['stage__item', { 'is-cutout': m.cutout, 'is-active': i === 0 }]} data-stage={i}>
+              <Image
+                src={img(m.image)}
+                alt={i === 0 ? product.name : `${product.name}, vista ${i + 1}`}
+                widths={[600, 900, 1300]}
+                sizes="(max-width: 900px) 100vw, 58vw"
+                loading={i === 0 ? 'eager' : 'lazy'}
+              />
+            </div>
+          ))
+        }
+      </div>
+      {
+        media.length > 1 && (
+          <div class="product__thumbs">
+            {media.map((m, i) => (
+              <button
+                type="button"
+                class:list={['thumb', { 'is-cutout': m.cutout, 'is-active': i === 0 }]}
+                data-thumb={i}
+                aria-label={`Ver imagen ${i + 1}`}
+                aria-pressed={i === 0 ? 'true' : 'false'}
+              >
+                <Image src={img(m.image)} alt="" width={160} />
+              </button>
+            ))}
+          </div>
+        )
+      }
+    </div>
+
+    <div class="product__info">
+      <p class="eyebrow muted">{line ? line.name : category.name}</p>
+      <h1 class="product__title">{product.name}</h1>
+      <p class="product__code">Modelo {product.code}</p>
+
+      <dl class="specs">
+        <div>
+          <dt>Materiales</dt>
+          <dd>{product.materials.join(' · ')}</dd>
+        </div>
+        {
+          product.dimensions && (
+            <div>
+              <dt>Medidas</dt>
+              <dd>{product.dimensions}</dd>
+            </div>
+          )
+        }
+        <div>
+          <dt>Origen</dt>
+          <dd>Hecho a mano en {site.address.city}, Chile</dd>
+        </div>
+      </dl>
+
+      <div class="product__actions">
+        <a class="btn btn--solid" href={whatsappLink(quote)} target="_blank" rel="noopener">
+          <Icon name="whatsapp" size={18} /> Cotizar por WhatsApp
+        </a>
+        <a class="btn" href={mailLink(`Cotización: ${product.name}`, quote)}>
+          <Icon name="mail" size={18} /> Consultar por correo
+        </a>
+      </div>
+
+      <div class="accordion">
+        <details open>
+          <summary>Descripción <Icon name="plus" size={16} /></summary>
+          <p>
+            {line ? line.intro : category.intro}
+          </p>
+        </details>
+        <details>
+          <summary>Hecho a medida <Icon name="plus" size={16} /></summary>
+          <p>
+            Cada pieza se fabrica en nuestro taller de Pucón. Podemos adaptar medidas, maderas y terminaciones a tu proyecto. Escríbenos para
+            conocer plazos de fabricación.
+          </p>
+        </details>
+        {
+          product.leather && (
+            <details>
+              <summary>
+                Colores de cuero <Icon name="plus" size={16} />
+              </summary>
+              <ul class="swatches">
+                {leatherColors.map((c) => (
+                  <li>
+                    <Image src={img(c.image)} alt="" width={96} />
+                    <span>{c.name}</span>
+                  </li>
+                ))}
+              </ul>
+              <p class="muted small">*Consultar disponibilidad de colores.</p>
+            </details>
+          )
+        }
+        <details>
+          <summary>Despacho <Icon name="plus" size={16} /></summary>
+          <p>
+            Puedes retirar en nuestra tienda en {site.address.street}, {site.address.city}. Para despachos a otras ciudades, consúltanos por
+            WhatsApp o correo.
+          </p>
+        </details>
+      </div>
+    </div>
+  </article>
+
+  {
+    related.length > 0 && (
+      <section class="section container" aria-labelledby="relacionados">
+        <div class="section-head">
+          <h2 id="relacionados" class="title-lg">
+            También te puede interesar
+          </h2>
+        </div>
+        <Rail label="Productos relacionados" buttonTop="33%">
+          {related.map((p) => (
+            <li>
+              <ProductCard product={p} />
+            </li>
+          ))}
+        </Rail>
+      </section>
+    )
+  }
+</Base>
+
+<style>
+  .crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 22px 0;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .crumbs a:hover {
+    color: var(--ink);
+  }
+
+  .product {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(320px, 1fr);
+    gap: clamp(28px, 5vw, 80px);
+    align-items: start;
+  }
+
+  .product__stage {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--tile);
+    overflow: hidden;
+  }
+
+  .stage__item {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .stage__item.is-active {
+    opacity: 1;
+  }
+
+  .stage__item :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .stage__item.is-cutout :global(img) {
+    object-fit: contain;
+    padding: 8%;
+  }
+
+  .product__thumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .thumb {
+    width: 76px;
+    height: 76px;
+    background: var(--tile);
+    border: 1px solid transparent;
+    opacity: 0.7;
+    transition:
+      opacity 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .thumb.is-active,
+  .thumb:hover {
+    opacity: 1;
+    border-color: var(--ink);
+  }
+
+  .thumb :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .thumb.is-cutout :global(img) {
+    object-fit: contain;
+    padding: 6px;
+  }
+
+  .product__info {
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+    display: grid;
+    gap: 6px;
+  }
+
+  .product__title {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    letter-spacing: 0.06em;
+  }
+
+  .product__code {
+    margin: 0;
+    font-family: var(--sans);
+    font-size: 0.875rem;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+  }
+
+  .specs {
+    display: grid;
+    gap: 0;
+    margin: 26px 0 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .specs div {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .specs dt {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding-top: 4px;
+  }
+
+  .specs dd {
+    margin: 0;
+  }
+
+  .product__actions {
+    display: grid;
+    gap: 10px;
+    margin: 28px 0 18px;
+  }
+
+  .accordion details {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .accordion summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .accordion summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .accordion summary :global(svg) {
+    transition: transform 0.25s ease;
+  }
+
+  .accordion details[open] summary :global(svg) {
+    transform: rotate(45deg);
+  }
+
+  .accordion details > p,
+  .accordion details > ul {
+    margin: 0 0 18px;
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+    gap: 14px 10px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .swatches li {
+    display: grid;
+    gap: 6px;
+    font-size: 0.9375rem;
+    line-height: 1.25;
+  }
+
+  .swatches :global(img) {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .small {
+    font-size: 0.9375rem;
+  }
+
+  @media (max-width: 900px) {
+    .product {
+      grid-template-columns: 1fr;
+    }
+
+    .product__info {
+      position: static;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((g) => {
+    const items = g.querySelectorAll<HTMLElement>('[data-stage]');
+    const thumbs = g.querySelectorAll<HTMLButtonElement>('[data-thumb]');
+    thumbs.forEach((t) =>
+      t.addEventListener('click', () => {
+        const i = Number(t.dataset.thumb);
+        items.forEach((el, j) => el.classList.toggle('is-active', i === j));
+        thumbs.forEach((el, j) => {
+          el.classList.toggle('is-active', i === j);
+          el.setAttribute('aria-pressed', String(i === j));
+        });
+      }),
+    );
+  });
+</script>
