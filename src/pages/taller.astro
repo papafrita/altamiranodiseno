@@ -5,6 +5,7 @@ import TextImage from '~/components/TextImage.astro';
 import CtaBand from '~/components/CtaBand.astro';
 import { site } from '~/data/site';
 import { img } from '~/lib/img';
+import { url } from '~/lib/url';
 ---
 
 <Base
@@ -38,7 +39,7 @@ import { img } from '~/lib/img';
         Raulí, laurel, aromo, roble y más. Seleccionamos cada tabla por su veta y su color, y la trabajamos con terminaciones lisas,
         texturadas, blanqueadas o en tonos ceniza y gris.
       </p>
-      <a class="btn btn--small" href="/historias/maderas-nativas">Leer más</a>
+      <a class="btn btn--small" href={url('/historias/maderas-nativas')}>Leer más</a>
     </TextImage>
 
     <TextImage id="cuero" image="taller/cuero" title="Cuero de origen nacional" eyebrow="Materiales" reverse>
@@ -46,14 +47,14 @@ import { img } from '~/lib/img';
         Asientos y respaldos en cuero chileno, cortado y costurado en el taller. Disponible en natural, negros, azules, rojo, verde oliva,
         whisky y café moro.
       </p>
-      <a class="btn btn--small" href="/colores-de-cuero">Ver colores</a>
+      <a class="btn btn--small" href={url('/colores-de-cuero')}>Ver colores</a>
     </TextImage>
 
     <TextImage id="acero" image="taller/acero-soldadura" title="Acero y madera" eyebrow="Oficio">
       <p>
         Forjamos y soldamos bases de mesas, taburetes y sillas. El acero aporta sutileza y un toque contemporáneo a cada espacio.
       </p>
-      <a class="btn btn--small" href="/historias/acero-y-madera">Leer más</a>
+      <a class="btn btn--small" href={url('/historias/acero-y-madera')}>Leer más</a>
     </TextImage>
 
     <TextImage id="luz" image="taller/lamparas-artesano" title="Cuerpos de luz" eyebrow="Oficio" reverse>
@@ -61,7 +62,7 @@ import { img } from '~/lib/img';
         Cada obra toma forma a partir de un proceso artesanal meticuloso. El resultado es una escultura de luz única y original,
         resistente y sólida.
       </p>
-      <a class="btn btn--small" href="/productos/lamparas">Ver lámparas</a>
+      <a class="btn btn--small" href={url('/productos/lamparas')}>Ver lámparas</a>
     </TextImage>
   </div>
 

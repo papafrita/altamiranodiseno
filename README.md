@@ -39,6 +39,12 @@ npm run images -- --force # todas
 
 Los productos con recorte (fondo transparente) se muestran sobre fondo neutro; las fotos de ambiente se recortan para llenar su espacio.
 
+## Publicación
+
+Cada push a `main` publica una vista previa en GitHub Pages: <https://papafrita.github.io/altamiranodiseno/> (`.github/workflows/pages.yml`).
+
+El sitio usa `SITE_URL` y `BASE_PATH` para funcionar bajo `/altamiranodiseno/`; sin esas variables se compila para el dominio definitivo. Los enlaces internos deben pasar por `url()` de `src/lib/url.ts`.
+
 ## Pendiente de validar con el cliente
 
 - Textos de historias, taller y descripciones (borrador basado en el catálogo 2026).

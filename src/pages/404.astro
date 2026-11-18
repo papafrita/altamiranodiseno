@@ -1,6 +1,7 @@
 ---
 import Base from '~/layouts/Base.astro';
 import PageIntro from '~/components/PageIntro.astro';
+import { url } from '~/lib/url';
 ---
 
 <Base title="Página no encontrada">
@@ -8,8 +9,8 @@ import PageIntro from '~/components/PageIntro.astro';
     <p>La página que buscas no existe o cambió de lugar.</p>
   </PageIntro>
   <div class="center actions">
-    <a class="btn btn--solid" href="/productos">Ver productos</a>
-    <a class="btn" href="/">Ir al inicio</a>
+    <a class="btn btn--solid" href={url('/productos')}>Ver productos</a>
+    <a class="btn" href={url('/')}>Ir al inicio</a>
   </div>
 </Base>
 

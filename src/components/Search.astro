@@ -3,6 +3,7 @@ import { getImage } from 'astro:assets';
 import Icon from './Icon.astro';
 import { categories, lineOf, products, categoryOf } from '~/data/catalog';
 import { img } from '~/lib/img';
+import { url } from '~/lib/url';
 
 const index = await Promise.all(
   products.map(async (p) => ({
@@ -13,7 +14,7 @@ const index = await Promise.all(
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
       .toLowerCase(),
-    href: `/producto/${p.slug}`,
+    href: url(`/producto/${p.slug}`),
     thumb: (await getImage({ src: img(p.image), width: 120, format: 'webp' })).src,
     cutout: p.cutout,
   })),
@@ -35,7 +36,7 @@ const index = await Promise.all(
       <ul>
         {categories.map((c) => (
           <li>
-            <a class="link-underline" href={`/productos/${c.slug}`}>{c.name}</a>
+            <a class="link-underline" href={url(`/productos/${c.slug}`)}>{c.name}</a>
           </li>
         ))}
       </ul>

@@ -4,9 +4,11 @@ import Icon from './Icon.astro';
 import { nav } from '~/data/nav';
 import { site, whatsappLink } from '~/data/site';
 import { img } from '~/lib/img';
+import { url } from '~/lib/url';
 
 const path = Astro.url.pathname;
-const isActive = (href: string) => path === href || path.startsWith(`${href}/`) || (href === '/productos' && path.startsWith('/producto/'));
+const isActive = (href: string) =>
+  path === url(href) || path.startsWith(`${url(href)}/`) || (href === '/productos' && path.startsWith(url('/producto/')));
 ---
 
 <header class="site-header" data-header>
@@ -20,7 +22,7 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`) 
       </button>
     </div>
 
-    <a class="logo" href="/" aria-label={`${site.name}, inicio`}>
+    <a class="logo" href={url('/')} aria-label={`${site.name}, inicio`}>
       <span class="logo__box">
         <Image src={img('marca/logo')} alt="" width={240} loading="eager" class="logo__img" />
       </span>
@@ -44,7 +46,7 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`) 
       {
         nav.map((group) => (
           <li class="nav-item">
-            <a class:list={['nav-item__link', { 'is-active': isActive(group.href) }]} href={group.href}>
+            <a class:list={['nav-item__link', { 'is-active': isActive(group.href) }]} href={url(group.href)}>
               {group.label}
             </a>
             <div class="mega">
@@ -56,7 +58,7 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`) 
                       <ul>
                         {col.links.map((l) => (
                           <li>
-                            <a class="link-underline" href={l.href}>
+                            <a class="link-underline" href={url(l.href)}>
                               {l.label}
                             </a>
                           </li>
@@ -67,7 +69,7 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`) 
                 </div>
                 <div class="mega__featured">
                   {group.featured.map((f) => (
-                    <a class="mega__card" href={f.href}>
+                    <a class="mega__card" href={url(f.href)}>
                       <Image src={img(f.image)} alt="" width={420} widths={[280, 420]} sizes="210px" class="mega__img" />
                       <span>{f.label}</span>
                     </a>
@@ -100,7 +102,7 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`) 
               <ul>
                 {group.columns.flatMap((c) => c.links).map((l) => (
                   <li>
-                    <a href={l.href}>{l.label}</a>
+                    <a href={url(l.href)}>{l.label}</a>
                   </li>
                 ))}
               </ul>

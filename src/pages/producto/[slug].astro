@@ -8,6 +8,7 @@ import Icon from '~/components/Icon.astro';
 import { categoryOf, leatherColors, lineOf, products, type Product } from '~/data/catalog';
 import { mailLink, site, whatsappLink } from '~/data/site';
 import { img } from '~/lib/img';
+import { url } from '~/lib/url';
 
 export const getStaticPaths = (() => products.map((p) => ({ params: { slug: p.slug }, props: { product: p } }))) satisfies GetStaticPaths;
 
@@ -30,16 +31,16 @@ const quote = `Hola, quisiera cotizar ${product.name} (${product.materials.join(
 <Base title={product.name} description={`${product.name}: ${product.materials.join(', ')}. Hecho a mano en Pucón.`} image={product.image}>
   <div class="container">
     <nav class="crumbs" aria-label="Ruta de navegación">
-      <a href="/">Inicio</a>
+      <a href={url('/')}>Inicio</a>
       <span aria-hidden="true">/</span>
-      <a href="/productos">Productos</a>
+      <a href={url('/productos')}>Productos</a>
       <span aria-hidden="true">/</span>
-      <a href={`/productos/${category.slug}`}>{category.name}</a>
+      <a href={url(`/productos/${category.slug}`)}>{category.name}</a>
       {
         line && (
           <>
             <span aria-hidden="true">/</span>
-            <a href={`/productos/${category.slug}#${line.slug}`}>{line.name}</a>
+            <a href={url(`/productos/${category.slug}#${line.slug}`)}>{line.name}</a>
           </>
         )
       }

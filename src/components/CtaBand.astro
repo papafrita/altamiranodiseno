@@ -1,5 +1,6 @@
 ---
 import { whatsappLink } from '~/data/site';
+import { url } from '~/lib/url';
 
 interface Props {
   title?: string;
@@ -20,7 +21,7 @@ const {
     <p class="lead measure">{text}</p>
     <div class="band__actions">
       <a class="btn btn--solid" href={whatsappLink(message)} target="_blank" rel="noopener">Cotizar por WhatsApp</a>
-      <a class="btn" href="/contacto">Contacto</a>
+      <a class="btn" href={url('/contacto')}>Contacto</a>
     </div>
   </div>
 </section>

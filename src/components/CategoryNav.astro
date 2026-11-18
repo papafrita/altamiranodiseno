@@ -1,5 +1,6 @@
 ---
 import { categories } from '~/data/catalog';
+import { url } from '~/lib/url';
 
 interface Props {
   current?: string;
@@ -11,12 +12,12 @@ const { current } = Astro.props;
 <nav class="catnav container" aria-label="Categorías">
   <ul>
     <li>
-      <a href="/productos" aria-current={current ? undefined : 'page'}>Todos</a>
+      <a href={url('/productos')} aria-current={current ? undefined : 'page'}>Todos</a>
     </li>
     {
       categories.map((c) => (
         <li>
-          <a href={`/productos/${c.slug}`} aria-current={current === c.slug ? 'page' : undefined}>
+          <a href={url(`/productos/${c.slug}`)} aria-current={current === c.slug ? 'page' : undefined}>
             {c.name}
           </a>
         </li>

@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import type { Story } from '~/data/stories';
 import { img } from '~/lib/img';
+import { url } from '~/lib/url';
 
 interface Props {
   story: Story;
@@ -10,7 +11,7 @@ interface Props {
 const { story } = Astro.props;
 ---
 
-<a class="story" href={`/historias/${story.slug}`}>
+<a class="story" href={url(`/historias/${story.slug}`)}>
   <div class="story__media">
     <Image src={img(story.cover)} alt="" widths={[480, 720, 960]} sizes="(max-width: 900px) 100vw, 33vw" />
   </div>

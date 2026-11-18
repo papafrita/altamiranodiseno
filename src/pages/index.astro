@@ -10,6 +10,7 @@ import { categories, productsInLine } from '~/data/catalog';
 import { stories } from '~/data/stories';
 import { mailLink, whatsappLink } from '~/data/site';
 import { img } from '~/lib/img';
+import { url } from '~/lib/url';
 
 const hero: Slide[] = [
   {
@@ -91,7 +92,7 @@ const featured = [...productsInLine('silla-altamirano'), ...productsInLine('siti
         {
           categories.map((c) => (
             <li>
-              <a class="type" href={`/productos/${c.slug}`}>
+              <a class="type" href={url(`/productos/${c.slug}`)}>
                 <span class="type__media">
                   <Image src={img(c.cover)} alt="" widths={[360, 540]} sizes="(max-width: 640px) 72vw, (max-width: 1024px) 40vw, 20vw" />
                 </span>
@@ -115,7 +116,7 @@ const featured = [...productsInLine('silla-altamirano'), ...productsInLine('siti
   <section class="section container" aria-labelledby="linea-altamirano">
     <div class="section-head reveal">
       <h2 id="linea-altamirano" class="title-lg">Línea Altamirano</h2>
-      <a class="btn btn--small" href="/productos/sillas#silla-altamirano">Ver todo</a>
+      <a class="btn btn--small" href={url('/productos/sillas#silla-altamirano')}>Ver todo</a>
     </div>
     <div class="reveal">
       <Rail label="Línea Altamirano" buttonTop="33%">
@@ -147,7 +148,7 @@ const featured = [...productsInLine('silla-altamirano'), ...productsInLine('siti
       {stories.slice(0, 3).map((s) => <StoryCard story={s} />)}
     </div>
     <div class="center more reveal">
-      <a class="btn btn--small" href="/historias">Ver todo</a>
+      <a class="btn btn--small" href={url('/historias')}>Ver todo</a>
     </div>
   </section>
 
@@ -166,7 +167,7 @@ const featured = [...productsInLine('silla-altamirano'), ...productsInLine('siti
         terminaciones y colores de cuero, o diseñar algo a la medida.
       </p>
       <div class="actions">
-        <a class="btn btn--solid" href="/contacto">Contáctanos</a>
+        <a class="btn btn--solid" href={url('/contacto')}>Contáctanos</a>
         <a class="btn" href={whatsappLink('Hola, quisiera asesoría para mi espacio.')} target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </TextImage>

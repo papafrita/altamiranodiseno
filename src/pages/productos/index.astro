@@ -6,6 +6,7 @@ import ProductGrid from '~/components/ProductGrid.astro';
 import Gallery from '~/components/Gallery.astro';
 import CtaBand from '~/components/CtaBand.astro';
 import { categories, products, productsIn } from '~/data/catalog';
+import { url } from '~/lib/url';
 ---
 
 <Base title="Productos" description="Sillas, sitiales, taburetes, butacones, mesas, arrimos, sofás, veladores y lámparas hechos a mano en Pucón.">
@@ -26,7 +27,7 @@ import { categories, products, productsIn } from '~/data/catalog';
             <h2 id={`t-${c.slug}`} class="title-md">
               {c.name}
             </h2>
-            <a class="btn btn--small" href={`/productos/${c.slug}`}>
+            <a class="btn btn--small" href={url(`/productos/${c.slug}`)}>
               Ver {c.name.toLowerCase()}
             </a>
           </div>

@@ -1,4 +1,5 @@
 ---
+import { url } from '~/lib/url';
 interface Props {
   title: string;
   eyebrow?: string;
@@ -12,11 +13,11 @@ const { title, eyebrow, crumbs } = Astro.props;
   {
     crumbs && (
       <nav class="crumbs" aria-label="Ruta de navegación">
-        <a href="/">Inicio</a>
+        <a href={url('/')}>Inicio</a>
         {crumbs.map((c) => (
           <>
             <span aria-hidden="true">/</span>
-            <a href={c.href}>{c.label}</a>
+            <a href={url(c.href)}>{c.label}</a>
           </>
         ))}
       </nav>

@@ -6,6 +6,7 @@ import Footer from '~/components/Footer.astro';
 import Search from '~/components/Search.astro';
 import { site } from '~/data/site';
 import { img } from '~/lib/img';
+import { url } from '~/lib/url';
 
 interface Props {
   title?: string;
@@ -27,8 +28,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/favicon.png" type="image/png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" href={url('/favicon.png')} type="image/png" />
+    <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={fullTitle} />

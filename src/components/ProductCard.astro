@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import type { Product } from '~/data/catalog';
 import { img } from '~/lib/img';
+import { url } from '~/lib/url';
 
 interface Props {
   product: Product;
@@ -11,7 +12,7 @@ interface Props {
 const { product, sizes = '(max-width: 640px) 72vw, (max-width: 1024px) 40vw, 24vw' } = Astro.props;
 ---
 
-<a class="card" href={`/producto/${product.slug}`}>
+<a class="card" href={url(`/producto/${product.slug}`)}>
   <div class:list={['card__media', { 'is-cutout': product.cutout }]}>
     <Image
       src={img(product.image)}

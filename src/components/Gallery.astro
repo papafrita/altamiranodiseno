@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { img } from '~/lib/img';
+import { url } from '~/lib/url';
 
 interface Props {
   images: { image: string; caption?: string; href?: string }[];
@@ -29,7 +30,7 @@ for (let i = items.length - 1; i >= 0 && cells % COLUMNS !== 0; i--) {
       const Tag = href ? 'a' : 'div';
       return (
         <li class:list={['gallery__item reveal', { 'is-tall': tall }]}>
-          <Tag class="gallery__inner" href={href}>
+          <Tag class="gallery__inner" href={href && url(href)}>
             <Image src={meta} alt={caption ?? ''} widths={[480, 800, 1200]} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
             {caption && <span class="gallery__caption">{caption}</span>}
           </Tag>

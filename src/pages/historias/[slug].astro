@@ -5,6 +5,7 @@ import Base from '~/layouts/Base.astro';
 import StoryCard from '~/components/StoryCard.astro';
 import { stories, type Story } from '~/data/stories';
 import { img } from '~/lib/img';
+import { url } from '~/lib/url';
 
 export const getStaticPaths = (() => stories.map((s) => ({ params: { slug: s.slug }, props: { story: s } }))) satisfies GetStaticPaths;
 
@@ -15,7 +16,7 @@ const others = stories.filter((s) => s.slug !== story.slug).slice(0, 3);
 <Base title={story.title} description={story.intro} image={story.cover}>
   <article>
     <header class="head container">
-      <a class="eyebrow muted" href="/historias">Historias</a>
+      <a class="eyebrow muted" href={url('/historias')}>Historias</a>
       <h1 class="title-xl">{story.title}</h1>
       <p class="quote">“{story.quote}”</p>
     </header>
@@ -36,7 +37,7 @@ const others = stories.filter((s) => s.slug !== story.slug).slice(0, 3);
     {
       story.related && (
         <div class="center">
-          <a class="btn" href={story.related.href}>
+          <a class="btn" href={url(story.related.href)}>
             {story.related.label}
           </a>
         </div>

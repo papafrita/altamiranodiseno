@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import { img } from '~/lib/img';
+import { url } from '~/lib/url';
 
 export interface Slide {
   image: string;
@@ -49,7 +50,7 @@ const { slides, label, variant = 'hero', priority = false } = Astro.props;
           {i === 0 && priority ? <h1 class="slide__title">{s.title}</h1> : <h2 class="slide__title">{s.title}</h2>}
           {s.subtitle && <p class="slide__subtitle">{s.subtitle}</p>}
           {s.cta && (
-            <a class="btn btn--light" href={s.cta.href} tabindex={i === 0 ? undefined : -1}>
+            <a class="btn btn--light" href={url(s.cta.href)} tabindex={i === 0 ? undefined : -1}>
               {s.cta.label}
             </a>
           )}

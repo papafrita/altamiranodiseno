@@ -4,6 +4,7 @@ import Icon from './Icon.astro';
 import { footerLinks } from '~/data/nav';
 import { mailLink, site, whatsappLink } from '~/data/site';
 import { img } from '~/lib/img';
+import { url } from '~/lib/url';
 
 const year = new Date().getFullYear();
 ---
@@ -15,7 +16,7 @@ const year = new Date().getFullYear();
         {
           footerLinks.map((l) => (
             <li>
-              <a class="link-underline" href={l.href}>
+              <a class="link-underline" href={url(l.href)}>
                 {l.label}
               </a>
             </li>
@@ -69,7 +70,7 @@ const year = new Date().getFullYear();
   </div>
 
   <div class="container footer__bottom">
-    <a href="/" class="footer__logo" aria-label="Inicio">
+    <a href={url('/')} class="footer__logo" aria-label="Inicio">
       <Image src={img('marca/logo')} alt="" width={240} />
     </a>
     <p>© {year} {site.name}. Muebles hechos a mano en {site.address.city}, {site.address.country}.</p>
